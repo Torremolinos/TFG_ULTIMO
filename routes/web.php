@@ -21,6 +21,9 @@ use App\Http\Controllers\OrderListController;
 Route::get('/contacto', function () {
     return view('contacto');
 });
+Route::get('/gracias', function () {
+    return view('gracias');
+});
 Route::get('/donde', function () {
     return view('donde');
 });
@@ -43,7 +46,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('products', ProductController::class);
-Route::resource('order', OrderController::class);
+Route::resource('orders', OrderController::class);
 Route::resource('orderList', OrderListController::class);
 
 

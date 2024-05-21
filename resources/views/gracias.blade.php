@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MerakiHandMadeLove</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"> 
+    <title>MerakiHandMadeLove - Gracias</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
@@ -24,11 +24,10 @@
             <ul class="nav-list">
                 <li><a href="{{'/'}}">Inicio</a></li>
                 <li><a href="{{'/products'}}">Productos</a></li>
-               
-                <li><a href="{{'/sobre'}}">Quienes Somos</a></li>
-                <li><a href="{{'/orders'}}">
+                <li><a href="{{'/order'}}">
                         <img class="shoppingCart" src="/assets/svg/shopping_cart_24dp_FILL0_wght400_GRAD0_opsz24 (1).svg">
                     </a></li>
+                <li><a href="{{'/contacto'}}">Donde estamos</a></li>
                 @if (Route::has('login'))
                 @auth
                 <li class="auth-container">
@@ -51,22 +50,19 @@
             </ul>
         </nav>
     </header>
-    <section class="d-flex flex-column align-items-center py-5">
-        <div class="container text-center">
+    <section>
+        <div class="container text-center py-5">
             <div class="row justify-content-center">
-                <div class="col-12 mb-4">
-                    <h2>Ubicación</h2>
-                </div>
                 <div class="col-md-8">
-                    <div class="embed-responsive embed-responsive-16by9 mb-4">
-                        <iframe class="embed-responsive-item" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3519.7524093101006!2d-16.739850223939698!3d28.093094208371493!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xc6a974dbc22e5ab%3A0x8742816c5e098a4b!2sAv.%20de%20Bruselas%2C%2017%2C%2038660%20Costa%20Adeje%2C%20Santa%20Cruz%20de%20Tenerife!5e0!3m2!1ses!2ses!4v1716322599717!5m2!1ses!2ses" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                    </div>
-                </div>
-                <div class="col-md-8">
-                    <h2>Horario de Atención</h2>
-                    <p>Lunes a Viernes: 9:00 AM - 6:00 PM</p>
-                    <p>Sábado: 10:00 AM - 4:00 PM</p>
-                    <p>Domingo: Cerrado</p>
+                    <img src="/assets/gracias/gracias.jpg" class="img-fluid mb-4" alt="Código QR">
+                    <h2 class="mb-4">¡Gracias por tu Compra!</h2>
+                    <p>
+                        Apreciamos mucho tu compra. Esperamos que disfrutes de tus nuevos productos de MerakiHandMade. Si tienes alguna pregunta o inquietud, no dudes en ponerte en contacto con nosotros.
+                    </p>
+                    <p>
+                        Laura, nuestra fundadora, trabaja arduamente para asegurar que cada producto que hacemos esté hecho con amor y dedicación. Tu apoyo nos permite seguir creando y compartiendo nuestras creaciones únicas.
+                    </p>
+                    <a href="/" class="btn btn-primary mt-3">Volver al Inicio</a>
                 </div>
             </div>
         </div>
@@ -76,7 +72,7 @@
             <div class="box">
                 <figure>
                     <a href="index.html">
-                        <img src=/assets/logo/logo.png alt="Logo MerakiHandMade">
+                        <img src="/assets/logo/logo.png" alt="Logo MerakiHandMade">
                     </a>
                 </figure>
             </div>
@@ -84,7 +80,7 @@
                 <h2>SOBRE NOSOTROS</h2>
                 <a href="{{'/sobre'}}">Quienes Somos</a>
                 <a href="{{'/donde'}}">Donde estamos</a>
-                <a href="{{'/sobre'}}">Contáctanos</a>
+                <a href="{{'/contacto'}}">Contáctanos</a>
             </div>
             <div class="box">
                 <div class="red-social">

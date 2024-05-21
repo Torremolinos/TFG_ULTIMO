@@ -24,10 +24,11 @@
             <ul class="nav-list">
                 <li><a href="{{'/'}}">Inicio</a></li>
                 <li><a href="{{'/products'}}">Productos</a></li>
-                <li><a href="{{'/order'}}">
+               
+                <li><a href="{{'/contacto'}}">Donde estamos</a></li>
+                <li><a href="{{'/orders'}}">
                         <img class="shoppingCart" src="/assets/svg/shopping_cart_24dp_FILL0_wght400_GRAD0_opsz24 (1).svg">
                     </a></li>
-                <li><a href="{{'/contacto'}}">Donde estamos</a></li>
                 @if (Route::has('login'))
                 @auth
                 <li class="auth-container">

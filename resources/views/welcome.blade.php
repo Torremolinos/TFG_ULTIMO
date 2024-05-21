@@ -22,13 +22,14 @@
         <nav class="nav" id="nav">
             <button class="cerrar-menu" id="cerrar"><i class="bi bi-x"></i></button>
             <ul class="nav-list">
-                <li><a href="{{'/'}}">Inicio</a></li>
+            <li><a href="{{'/'}}">Inicio</a></li>
                 <li><a href="{{'/products'}}">Productos</a></li>
-                <li><a href="{{'/order'}}">
-                        <img class="shoppingCart"
-                            src="/assets/svg/shopping_cart_24dp_FILL0_wght400_GRAD0_opsz24 (1).svg">
+                
+                    <li><a href="{{'/contacto'}}">Contacto</a></li>
+                <li><a href="{{'/sobre'}}">Quienes Somos</a></li>
+                <li><a href="{{'/orders'}}">
+                        <img class="shoppingCart" src="/assets/svg/shopping_cart_24dp_FILL0_wght400_GRAD0_opsz24 (1).svg">
                     </a></li>
-                <li><a href="{{'/contacto'}}">Contacto</a></li>
                 @if (Route::has('login'))
                 @auth
                 <li class="auth-container">
