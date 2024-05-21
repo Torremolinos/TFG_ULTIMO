@@ -27,7 +27,7 @@
                 <li><a href="{{'/order'}}">
                         <img class="shoppingCart" src="/assets/svg/shopping_cart_24dp_FILL0_wght400_GRAD0_opsz24 (1).svg">
                     </a></li>
-                <li><a href="{{'/sobre'}}">Quienes Somos</a></li>
+                <li><a href="{{'/contacto'}}">Donde estamos</a></li>
                 @if (Route::has('login'))
                 @auth
                 <li class="auth-container">
@@ -50,22 +50,23 @@
             </ul>
         </nav>
     </header>
-    <section class="d-flex flex-column align-items-center py-5">
-        <div class="container text-center">
-            <div class="row justify-content-center">
-                <div class="col-12 mb-4">
-                    <h2>Ubicación</h2>
+    <section>
+        <div class="container py-5">
+            <div class="row align-items-center">
+                <div class="col-md-6 mb-4 mb-md-0">
+                    <img src="/assets/lau/LauColor.jpg" class="img-fluid rounded" alt="Sobre Nosotros">
                 </div>
-                <div class="col-md-8">
-                    <div class="embed-responsive embed-responsive-16by9 mb-4">
-                        <iframe class="embed-responsive-item" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3519.7524093101006!2d-16.739850223939698!3d28.093094208371493!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xc6a974dbc22e5ab%3A0x8742816c5e098a4b!2sAv.%20de%20Bruselas%2C%2017%2C%2038660%20Costa%20Adeje%2C%20Santa%20Cruz%20de%20Tenerife!5e0!3m2!1ses!2ses!4v1716322599717!5m2!1ses!2ses" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                    </div>
-                </div>
-                <div class="col-md-8">
-                    <h2>Horario de Atención</h2>
-                    <p>Lunes a Viernes: 9:00 AM - 6:00 PM</p>
-                    <p>Sábado: 10:00 AM - 4:00 PM</p>
-                    <p>Domingo: Cerrado</p>
+                <div class="col-md-6">
+                    <h2>Sobre Nosotros</h2>
+                    <p>
+                        Somos MerakiHandMade, una tienda artesanal dedicada a la creación y venta de llaveros epoxi y otros objetos de epoxi. Cada uno de nuestros productos está hecho a mano con amor y dedicación, asegurando la más alta calidad y originalidad en cada pieza.
+                    </p>
+                    <p>
+                        Laura, la fundadora de MerakiHandMade, es una persona muy trabajadora y apasionada por su arte. Se sacrifica mucho para asegurar que cada cliente reciba un producto único y de alta calidad. Laura disfruta enormemente atender a sus clientes y se esfuerza por brindar el mejor servicio posible.
+                    </p>
+                    <p>
+                        Es muy ingeniosa y su creatividad no tiene límites. Con epoxi, Laura crea una variedad de productos impresionantes, desde llaveros hasta objetos decorativos. Cada pieza es una obra de arte, elaborada con atención al detalle y un profundo amor por el oficio.
+                    </p>
                 </div>
             </div>
         </div>
@@ -75,15 +76,15 @@
             <div class="box">
                 <figure>
                     <a href="index.html">
-                        <img src=/assets/logo/logo.png alt="Logo MerakiHandMade">
+                        <img src="/assets/logo/logo.png" alt="Logo MerakiHandMade">
                     </a>
                 </figure>
             </div>
             <div class="box">
                 <h2>SOBRE NOSOTROS</h2>
                 <a href="{{'/sobre'}}">Quienes Somos</a>
-                <a href="{{'/donde'}}">Donde estamos</a>
-                <a href="{{'/sobre'}}">Contáctanos</a>
+                <a href="{{'/donde'}}">>Donde estamos</a>
+                <a href="{{'/contacto'}}">Contáctanos</a>
             </div>
             <div class="box">
                 <div class="red-social">

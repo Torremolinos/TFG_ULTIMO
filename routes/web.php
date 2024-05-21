@@ -18,6 +18,16 @@ use App\Http\Controllers\OrderListController;
 |
 */
 
+Route::get('/contacto', function () {
+    return view('contacto');
+});
+Route::get('/donde', function () {
+    return view('donde');
+});
+Route::get('/sobre', function () {
+    return view('sobre');
+});
+
 Route::get('/', function () {
     return view('welcome');
 });

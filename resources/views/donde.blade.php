@@ -27,7 +27,8 @@
                 <li><a href="{{'/order'}}">
                         <img class="shoppingCart" src="/assets/svg/shopping_cart_24dp_FILL0_wght400_GRAD0_opsz24 (1).svg">
                     </a></li>
-                <li><a href="{{'/sobre'}}">Quienes Somos</a></li>
+                <li><a href="{{'/contacto'}}">Contacto</a></li>
+                <li><a href="{{'/nosotros'}}">Quienes Somos</a></li>
                 @if (Route::has('login'))
                 @auth
                 <li class="auth-container">
@@ -82,8 +83,8 @@
             <div class="box">
                 <h2>SOBRE NOSOTROS</h2>
                 <a href="{{'/sobre'}}">Quienes Somos</a>
-                <a href="{{'/donde'}}">Donde estamos</a>
-                <a href="{{'/sobre'}}">Contáctanos</a>
+                <a href="{{'/donde'}}">>Donde estamos</a>
+                <a href="{{'/contacto'}}">Contáctanos</a>
             </div>
             <div class="box">
                 <div class="red-social">
