@@ -49,5 +49,7 @@ Route::resource('products', ProductController::class);
 Route::resource('orders', OrderController::class);
 Route::resource('orderList', OrderListController::class);
 
+Route::get('orders/{order}/invoice', [OrderController::class, 'generateInvoice'])->name('orders.invoice');
+
 
 require __DIR__.'/auth.php';

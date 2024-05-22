@@ -4,46 +4,50 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Order;
-use Illuminate\View\View;
+use App\Models\OrderItem;
+use Illuminate\Support\Facades\Auth;
+
+
 
 class OrderController extends Controller
 {
-    public function index():View
+    public function index()
     {
-        $orders = Order::with('items')->get();
+        $orders = Order::where('user_id', Auth::id())->get();
         return view('orders.index', compact('orders'));
-    }
-
-    public function show(Order $order):View
-    {
-        return view('orders.show', compact('order'));
-    }
-
-    public function create():View
-    {
-        return view('orders.create');
     }
 
     public function store(Request $request)
     {
-        $order = Order::create($request->all());
-        return redirect()->route('orders.show', $order);
+        $cart = json_decode($request->input('cart'), true);
+        $total_price = array_reduce($cart, function($carry, $item) {
+            return $carry + $item['price'] * $item['quantity'];
+        }, 0);
+
+        $order = Order::create([
+            'user_id' => Auth::id(),
+            'total_price' => $total_price,
+            'status' => 'pending'
+        ]);
+
+        foreach ($cart as $item) {
+            OrderItem::create([
+                'order_id' => $order->id,
+                'product_id' => $item['id'],
+                'quantity' => $item['quantity'],
+                'unit_amount' => $item['price'],
+                'total_amount' => $item['price'] * $item['quantity']
+            ]);
+        }
+
+        return redirect()->route('orders.show', $order->id);
     }
 
-    public function edit(Order $order)
+    public function show(Order $order)
     {
-        return view('orders.edit', compact('order'));
+        $this->authorize('view', $order);
+        return view('orders.show', compact('order'));
     }
 
-    public function update(Request $request, Order $order)
-    {
-        $order->update($request->all());
-        return redirect()->route('orders.show', $order);
-    }
 
-    public function destroy(Order $order)
-    {
-        $order->delete();
-        return redirect()->route('orders.index');
-    }
 }

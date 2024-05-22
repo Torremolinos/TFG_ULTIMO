@@ -1,17 +1,14 @@
+<!-- resources/views/products/index.blade.php -->
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MerakiHandMadeLove</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="{{ asset('styles/gallery.css') }}">
 </head>
-
 <body>
     <header>
         <a href="/">
@@ -23,10 +20,10 @@
             <ul class="nav-list">
                 <li><a href="{{'/'}}">Inicio</a></li>
                 <li><a href="{{'/products'}}">Productos</a></li>
-                <li><a href="{{'/order'}}">
+                <li><a href="{{'/orders'}}">
                         <img class="shoppingCart" src="/assets/svg/shopping_cart_24dp_FILL0_wght400_GRAD0_opsz24 (1).svg">
                     </a></li>
-                    <li><a href="{{'/contacto'}}">Contacto</a></li>
+                <li><a href="{{'/contacto'}}">Contacto</a></li>
                 @if (Route::has('login'))
                 @auth
                 <li class="auth-container">
@@ -52,77 +49,33 @@
     <section>
         <div class="main">
             <h1>Nuestros Productos</h1>
-            <ul class="cards">
-                <li class="cards_item">
-                    <div class="card">
-                        <div class="card_image"><img src="/assets/llaveros/LetraA1.jpeg"></div>
-                        <div class="card_content">
-                            <h2 class="card_title">Card Grid Layout</h2>
-                            <p class="card_text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam odit expedita, quia assumenda sint cupiditate a saepe laborum molestias iure, blanditiis minus. Culpa aliquid nam voluptate quos assumenda enim temporibus.</p>
-                            <button class="btn card_btn">Comprar</button>
+            <ul class="cards" id="product-list">
+                @foreach ($products as $product)
+                    @php
+                        $imagePath = 'storage/' . $product->image;
+                   
+                    @endphp
+                    <li class="cards_item">
+                        <div class="card">
+                            <div class="card_image"><img src="{{ asset($imagePath) }}" alt="{{ $product->name }}"></div>
+                            <div class="card_content">
+                                <h2 class="card_title">{{ $product->name }}</h2>
+                                <p class="card_text">{{ $product->description }}</p>
+                                <p class="card_text">€{{ $product->price }}</p>
+                                <button class="btn card_btn add-to-cart" data-id="{{ $product->id }}" data-name="{{ $product->name }}" data-price="{{ $product->price }}">Comprar</button>
+                            </div>
                         </div>
-                    </div>
-                </li>
-                <li class="cards_item">
-                    <div class="card">
-                        <div class="card_image"><img src="/assets/llaveros/LetraA1.jpeg"></div>
-                        <div class="card_content">
-                            <h2 class="card_title">Card Grid Layout</h2>
-                            <p class="card_text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate itaque consectetur esse quod tempora! Numquam corporis sapiente aliquid quidem provident! Porro iste ipsa blanditiis error in odit maiores, provident cupiditate?</p>
-                            <button class="btn card_btn">Comprar</button>
-                        </div>
-                    </div>
-                </li>
-                <li class="cards_item">
-                    <div class="card">
-                        <div class="card_image"><img src="/assets/llaveros/LetraA1.jpeg"></div>
-                        <div class="card_content">
-                            <h2 class="card_title">Card Grid Layout</h2>
-                            <p class="card_text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate itaque consectetur esse quod tempora! Numquam corporis sapiente aliquid quidem provident! Porro iste ipsa blanditiis error in odit maiores, provident cupiditate?</p>
-                            <button class="btn card_btn">Comprar</button>
-                        </div>
-                    </div>
-                </li>
-                <li class="cards_item">
-                    <div class="card">
-                        <div class="card_image"><img src="/assets/llaveros/LetraA1.jpeg"></div>
-                        <div class="card_content">
-                            <h2 class="card_title">Card Grid Layout</h2>
-                            <p class="card_text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate itaque consectetur esse quod tempora! Numquam corporis sapiente aliquid quidem provident! Porro iste ipsa blanditiis error in odit maiores, provident cupiditate?</p>
-                            <button class="btn card_btn">Comprar</button>
-                        </div>
-                    </div>
-                </li>
-                <li class="cards_item">
-                    <div class="card">
-                        <div class="card_image"><img src="/assets/llaveros/LetraA1.jpeg"></div>
-                        <div class="card_content">
-                            <h2 class="card_title">Card Grid Layout</h2>
-                            <p class="card_text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate itaque consectetur esse quod tempora! Numquam corporis sapiente aliquid quidem provident! Porro iste ipsa blanditiis error in odit maiores, provident cupiditate?</p>
-                            <button class="btn card_btn">Comprar</button>
-                        </div>
-                    </div>
-                </li>
-                <li class="cards_item">
-                    <div class="card">
-                        <div class="card_image"><img src="/assets/llaveros/LetraA1.jpeg"></div>
-                        <div class="card_content">
-                            <h2 class="card_title">Card Grid Layout</h2>
-                            <p class="card_text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate itaque consectetur esse quod tempora! Numquam corporis sapiente aliquid quidem provident! Porro iste ipsa blanditiis error in odit maiores, provident cupiditate?</p>
-                            <button class="btn card_btn">Comprar</button>
-                        </div>
-                    </div>
-                </li>
+                    </li>
+                @endforeach
             </ul>
         </div>
-
     </section>
     <footer class="pie-pagina">
         <section class="grupo-1">
             <div class="box">
                 <figure>
                     <a href="index.html">
-                        <img src=/assets/logo/logo.png alt="Logo MerakiHandMade">
+                        <img src="/assets/logo/logo.png" alt="Logo MerakiHandMade">
                     </a>
                 </figure>
             </div>
@@ -146,6 +99,24 @@
             © 2024 MerakiHandMadeLove. Todos los derechos reservados.</div>
     </footer>
     <script src="/scripts/index.js"></script>
-</body>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', function () {
+                    const id = this.getAttribute('data-id');
+                    const name = this.getAttribute('data-name');
+                    const price = this.getAttribute('data-price');
+
+                    const product = { id, name, price, quantity: 1 };
+                    cart.push(product);
+
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    alert(`${name} ha sido agregado al carrito`);
+                });
+            });
+        });
+    </script>
+</body>
 </html>

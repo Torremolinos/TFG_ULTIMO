@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,11 +7,10 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="{{ asset('styles/gallery.css') }}">
 </head>
-
 <body>
     <header>
         <a href="/">
@@ -61,37 +59,16 @@
                             <th>Acciones</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>Llavero Epoxi</td>
-                            <td>€10.00</td>
-                            <td>
-                                <input type="number" class="form-control" value="1" min="1">
-                            </td>
-                            <td>€10.00</td>
-                            <td>
-                                <button class="btn btn-danger btn-sm">Eliminar</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Objeto Decorativo Epoxi</td>
-                            <td>€15.00</td>
-                            <td>
-                                <input type="number" class="form-control" value="1" min="1">
-                            </td>
-                            <td>€15.00</td>
-                            <td>
-                                <button class="btn btn-danger btn-sm">Eliminar</button>
-                            </td>
-                        </tr>
+                    <tbody id="cart-items">
+                        <!-- Aquí se agregarán los productos del carrito -->
                     </tbody>
                 </table>
             </div>
             <div class="d-flex justify-content-end">
-                <h4>Total: €25.00</h4>
+                <h4 id="total-amount">Total: €0.00</h4>
             </div>
             <div class="d-flex justify-content-end mt-3">
-                <button class="btn btn-primary">Proceder al Pago</button>
+                <button class="btn btn-primary" id="proceed-to-reservation">Proceder a la Reserva</button>
             </div>
         </div>
     </section>
@@ -127,6 +104,78 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartItems = document.getElementById('cart-items');
+            const totalAmount = document.getElementById('total-amount');
+            let total = 0;
 
+            // Renderizar productos del carrito
+            cart.forEach(product => {
+                const row = document.createElement('tr');
+
+                row.innerHTML = `
+                    <td>${product.name}</td>
+                    <td>€${product.price}</td>
+                    <td>
+                        <input type="number" class="form-control quantity" value="${product.quantity}" min="1" data-id="${product.id}">
+                    </td>
+                    <td>€${(product.price * product.quantity).toFixed(2)}</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm remove" data-id="${product.id}">Eliminar</button>
+                    </td>
+                `;
+
+                cartItems.appendChild(row);
+                total += product.price * product.quantity;
+            });
+
+            totalAmount.textContent = `Total: €${total.toFixed(2)}`;
+
+            // Eliminar producto del carrito
+            document.querySelectorAll('.remove').forEach(button => {
+                button.addEventListener('click', function () {
+                    const id = this.getAttribute('data-id');
+                    cart = cart.filter(product => product.id != id);
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    location.reload();
+                });
+            });
+
+            // Actualizar cantidad de producto
+            document.querySelectorAll('.quantity').forEach(input => {
+                input.addEventListener('change', function () {
+                    const id = this.getAttribute('data-id');
+                    const quantity = parseInt(this.value);
+                    const product = cart.find(product => product.id == id);
+                    product.quantity = quantity;
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    location.reload();
+                });
+            });
+
+            // Proceder a la reserva
+            document.getElementById('proceed-to-reservation').addEventListener('click', function () {
+                if (cart.length > 0) {
+                    fetch('/reserve', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({ cart })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        localStorage.removeItem('cart');
+                        window.location.href = `/reservation/${data.id}`;
+                    });
+                } else {
+                    alert('El carrito está vacío');
+                }
+            });
+        });
+    </script>
+</body>
 </html>

@@ -24,7 +24,6 @@
             <ul class="nav-list">
                 <li><a href="{{'/'}}">Inicio</a></li>
                 <li><a href="{{'/products'}}">Productos</a></li>
-               
                 <li><a href="{{'/contacto'}}">Contacto</a></li>
                 <li><a href="{{'/nosotros'}}">Quienes Somos</a></li>
                 <li><a href="{{'/orders'}}">
