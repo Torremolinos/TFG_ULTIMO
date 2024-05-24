@@ -26,9 +26,12 @@
                 <li><a href="{{'/products'}}">Productos</a></li>
                 <li><a href="{{'/contacto'}}">Contacto</a></li>
                 <li><a href="{{'/nosotros'}}">Quienes Somos</a></li>
+                @auth
                 <li><a href="{{'/orders'}}">
-                        <img class="shoppingCart" src="/assets/svg/shopping_cart_24dp_FILL0_wght400_GRAD0_opsz24 (1).svg">
+                        <img class="shoppingCart"
+                            src="/assets/svg/shopping_cart_24dp_FILL0_wght400_GRAD0_opsz24 (1).svg">
                     </a></li>
+                    @endauth
                 @if (Route::has('login'))
                 @auth
                 <li class="auth-container">

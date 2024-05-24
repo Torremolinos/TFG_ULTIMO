@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MerakiHandMadeLove</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"> 
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
@@ -24,11 +24,12 @@
             <ul class="nav-list">
                 <li><a href="{{'/'}}">Inicio</a></li>
                 <li><a href="{{'/products'}}">Productos</a></li>
-               
                 <li><a href="{{'/contacto'}}">Donde estamos</a></li>
+                @auth
                 <li><a href="{{'/orders'}}">
                         <img class="shoppingCart" src="/assets/svg/shopping_cart_24dp_FILL0_wght400_GRAD0_opsz24 (1).svg">
                     </a></li>
+                @endauth
                 @if (Route::has('login'))
                 @auth
                 <li class="auth-container">
