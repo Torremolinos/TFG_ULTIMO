@@ -21,37 +21,6 @@ class OrderListController extends Controller
         return view('orders.show', compact('order'));
     }
 
-    public function create()
-    {
-        return view('orders.create');
-    }
-
-    public function store(Request $request)
-    {
-        $cart = json_decode($request->input('cart'), true);
-        $total_price = array_reduce($cart, function($carry, $item) {
-            return $carry + $item['price'] * $item['quantity'];
-        }, 0);
-
-        $order = Order::create([
-            'user_id' => Auth::id(),
-            'total_price' => $total_price,
-            'status' => 'pending'
-        ]);
-
-        foreach ($cart as $item) {
-            OrderItem::create([
-                'order_id' => $order->id,
-                'product_id' => $item['id'],
-                'quantity' => $item['quantity'],
-                'unit_amount' => $item['price'],
-                'total_amount' => $item['price'] * $item['quantity']
-            ]);
-        }
-
-        return response()->json(['id' => $order->id]);
-    }
-
     public function edit(OrderItem $orderItem)
     {
         return view('orderItems.edit', compact('orderItem'));

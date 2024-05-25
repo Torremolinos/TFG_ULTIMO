@@ -1,18 +1,14 @@
+<!-- resources/views/thank-you.blade.php -->
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MerakiHandMadeLove - Gracias</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <title>Gracias por su pedido</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="{{ asset('styles/gallery.css') }}">
 </head>
-
 <body>
     <header>
         <a href="/">
@@ -22,16 +18,21 @@
         <nav class="nav" id="nav">
             <button class="cerrar-menu" id="cerrar"><i class="bi bi-x"></i></button>
             <ul class="nav-list">
-                <li><a href="{{'/'}}">Inicio</a></li>
+                <li><a href="{{ url('/') }}">Inicio</a></li>
+                <li><a href="{{ url('/products') }}">Productos</a></li>
+                @auth            
+                <li><a href="{{ url('/orders') }}">
+                        <img class="shoppingCart" src="/assets/svg/shopping_cart_24dp_FILL0_wght400_GRAD0_opsz24 (1).svg">
+                    </a></li>
+                @endauth
+                <li><a href="{{ url('/contacto') }}">Contacto</a></li>
                 @if (Route::has('login'))
                 @auth
                 <li class="auth-container">
                     <span>Hola {{ auth()->user()->name }}</span>
                     <form method="POST" action="{{ route('logout') }}" id="logout-form">
                         @csrf
-                        <a href="#" onclick="document.getElementById('logout-form').submit();" class="logout-link">
-                            Cerrar sesión
-                        </a>
+                        <a href="#" onclick="document.getElementById('logout-form').submit();" class="logout-link">Cerrar sesión</a>
                     </form>
                 </li>
                 @else
@@ -46,20 +47,10 @@
         </nav>
     </header>
     <section>
-        <div class="container text-center py-5">
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <img src="/assets/gracias/gracias.jpg" class="img-fluid mb-4" alt="Código QR">
-                    <h2 class="mb-4">¡Gracias por tu Compra!</h2>
-                    <p>
-                        Apreciamos mucho tu compra. Esperamos que disfrutes de tus nuevos productos de MerakiHandMade. Si tienes alguna pregunta o inquietud, no dudes en ponerte en contacto con nosotros.
-                    </p>
-                    <p>
-                        Laura, nuestra fundadora, trabaja arduamente para asegurar que cada producto que hacemos esté hecho con amor y dedicación. Tu apoyo nos permite seguir creando y compartiendo nuestras creaciones únicas.
-                    </p>
-                    <a href="/" class="btn btn-primary mt-3">Volver al Inicio</a>
-                </div>
-            </div>
+        <div class="container py-5">
+            <h2 class="mb-4">Gracias por su pedido</h2>
+            <p>Su pedido ha sido procesado exitosamente. Nos pondremos en contacto con usted pronto.</p>
+            <a href="{{ url('/products') }}" class="btn btn-primary">Seguir comprando</a>
         </div>
     </section>
     <footer class="pie-pagina">
@@ -73,9 +64,9 @@
             </div>
             <div class="box">
                 <h2>SOBRE NOSOTROS</h2>
-                <a href="{{'/sobre'}}">Quienes Somos</a>
-                <a href="{{'/donde'}}">Donde estamos</a>
-                <a href="{{'/contacto'}}">Contáctanos</a>
+                <a href="https://www.instagram.com/meraki_handmadelove/?hl=es">Quienes Somos</a>
+                <a href="https://larian.com/playtest">Donde estamos</a>
+                <a href="https://larian.com/careers">Contactanos</a>
             </div>
             <div class="box">
                 <div class="red-social">
@@ -90,10 +81,5 @@
         <div class="grupo-2">
             © 2024 MerakiHandMadeLove. Todos los derechos reservados.</div>
     </footer>
-    <script src="/scripts/index.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
-
 </html>

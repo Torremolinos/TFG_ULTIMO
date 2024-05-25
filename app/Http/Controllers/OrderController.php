@@ -3,23 +3,46 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Product;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Support\Facades\Auth;
 
-
-
 class OrderController extends Controller
 {
-    public function index()
+    public function addToCart(Request $request)
     {
-        $orders = Order::where('user_id', Auth::id())->get();
-        return view('orders.index', compact('orders'));
+        $product = Product::find($request->input('id'));
+
+        if (!$product) {
+            return response()->json(['message' => 'Producto no encontrado'], 404);
+        }
+
+        $cart = session()->get('cart', []);
+
+        if (isset($cart[$product->id])) {
+            $cart[$product->id]['quantity']++;
+        } else {
+            $cart[$product->id] = [
+                "name" => $product->name,
+                "quantity" => 1,
+                "price" => $product->price,
+            ];
+        }
+
+        session()->put('cart', $cart);
+
+        return response()->json(['message' => 'Producto añadido al carrito']);
     }
 
     public function store(Request $request)
     {
-        $cart = json_decode($request->input('cart'), true);
+        $cart = $request->input('cart', []);
+
+        if (empty($cart)) {
+            return response()->json(['message' => 'El carrito está vacío'], 400);
+        }
+
         $total_price = array_reduce($cart, function($carry, $item) {
             return $carry + $item['price'] * $item['quantity'];
         }, 0);
@@ -40,7 +63,18 @@ class OrderController extends Controller
             ]);
         }
 
-        return redirect()->route('orders.show', $order->id);
+        return response()->json(['id' => $order->id, 'message' => 'Pedido realizado con éxito']);
+    }
+
+    public function gracias($id)
+    {
+        $order = Order::findOrFail($id);
+        return view('orders.gracias', compact('order'));
+    }
+    public function index()
+    {
+        $orders = Order::where('user_id', Auth::id())->get();
+        return view('orders.index', compact('orders'));
     }
 
     public function show(Order $order)
@@ -48,6 +82,7 @@ class OrderController extends Controller
         $this->authorize('view', $order);
         return view('orders.show', compact('order'));
     }
-
-
 }
+
+
+

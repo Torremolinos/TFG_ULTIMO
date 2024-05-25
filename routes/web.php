@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderListController;
+use App\Http\Controllers\CartController;
 
 
 /*
@@ -21,8 +22,8 @@ use App\Http\Controllers\OrderListController;
 Route::get('/contacto', function () {
     return view('contacto');
 });
-Route::get('/gracias', function () {
-    return view('gracias');
+Route::get('/orders/gracias', function () {
+    return view('/orders/gracias');
 });
 Route::get('/donde', function () {
     return view('donde');
@@ -45,11 +46,22 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/products/{id}', [ProductController::class, 'show']);
+Route::post('/cart/checkout', [CartController::class, 'checkout'])->middleware('auth');
+
 Route::resource('products', ProductController::class);
 Route::resource('orders', OrderController::class);
 Route::resource('orderList', OrderListController::class);
 
-Route::get('orders/{order}/invoice', [OrderController::class, 'generateInvoice'])->name('orders.invoice');
+
+Route::get('/cart/add', [OrderController::class, 'add'])->name('add');
+Route::get('/cart/checkout', [OrderController::class, 'checkout'])->name('checkout');
+
+
+
+
+
+
 
 
 require __DIR__.'/auth.php';

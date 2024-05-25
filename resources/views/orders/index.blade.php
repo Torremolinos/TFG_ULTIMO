@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MerakiHandMadeLove - Carrito</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="{{ asset('styles/gallery.css') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
+
 <body>
     <header>
         <a href="/">
@@ -20,18 +20,21 @@
         <nav class="nav" id="nav">
             <button class="cerrar-menu" id="cerrar"><i class="bi bi-x"></i></button>
             <ul class="nav-list">
-                <li><a href="{{'/'}}">Inicio</a></li>
-                <li><a href="{{'/products'}}">Productos</a></li>
-                <li><a href="{{'/contacto'}}">Donde estamos</a></li>
+                <li><a href="{{ url('/') }}">Inicio</a></li>
+                <li><a href="{{ url('/products') }}">Productos</a></li>
+                @auth
+                <li><a href="{{ url('/orders') }}">
+                        <img class="shoppingCart" src="/assets/svg/shopping_cart_24dp_FILL0_wght400_GRAD0_opsz24 (1).svg">
+                    </a></li>
+                @endauth
+                <li><a href="{{ url('/contacto') }}">Contacto</a></li>
                 @if (Route::has('login'))
                 @auth
                 <li class="auth-container">
                     <span>Hola {{ auth()->user()->name }}</span>
                     <form method="POST" action="{{ route('logout') }}" id="logout-form">
                         @csrf
-                        <a href="#" onclick="document.getElementById('logout-form').submit();" class="logout-link">
-                            Cerrar sesión
-                        </a>
+                        <a href="#" onclick="document.getElementById('logout-form').submit();" class="logout-link">Cerrar sesión</a>
                     </form>
                 </li>
                 @else
@@ -83,9 +86,9 @@
             </div>
             <div class="box">
                 <h2>SOBRE NOSOTROS</h2>
-                <a href="{{'/sobre'}}">Quienes Somos</a>
-                <a href="{{'/donde'}}">Donde estamos</a>
-                <a href="{{'/contacto'}}">Contáctanos</a>
+                <a href="https://www.instagram.com/meraki_handmadelove/?hl=es">Quienes Somos</a>
+                <a href="https://larian.com/playtest">Donde estamos</a>
+                <a href="https://larian.com/careers">Contactanos</a>
             </div>
             <div class="box">
                 <div class="red-social">
@@ -101,11 +104,8 @@
             © 2024 MerakiHandMadeLove. Todos los derechos reservados.</div>
     </footer>
     <script src="/scripts/index.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
             const cartItems = document.getElementById('cart-items');
             const totalAmount = document.getElementById('total-amount');
@@ -116,16 +116,16 @@
                 const row = document.createElement('tr');
 
                 row.innerHTML = `
-                    <td>${product.name}</td>
-                    <td>€${product.price}</td>
-                    <td>
-                        <input type="number" class="form-control quantity" value="${product.quantity}" min="1" data-id="${product.id}">
-                    </td>
-                    <td>€${(product.price * product.quantity).toFixed(2)}</td>
-                    <td>
-                        <button class="btn btn-danger btn-sm remove" data-id="${product.id}">Eliminar</button>
-                    </td>
-                `;
+            <td>${product.name}</td>
+            <td>€${product.price.toFixed(2)}</td>
+            <td>
+                <input type="number" class="form-control quantity" value="${product.quantity}" min="1" data-id="${product.id}">
+            </td>
+            <td>€${(product.price * product.quantity).toFixed(2)}</td>
+            <td>
+                <button class="btn btn-danger btn-sm remove" data-id="${product.id}">Eliminar</button>
+            </td>
+        `;
 
                 cartItems.appendChild(row);
                 total += product.price * product.quantity;
@@ -135,7 +135,7 @@
 
             // Eliminar producto del carrito
             document.querySelectorAll('.remove').forEach(button => {
-                button.addEventListener('click', function () {
+                button.addEventListener('click', function() {
                     const id = this.getAttribute('data-id');
                     cart = cart.filter(product => product.id != id);
                     localStorage.setItem('cart', JSON.stringify(cart));
@@ -145,7 +145,7 @@
 
             // Actualizar cantidad de producto
             document.querySelectorAll('.quantity').forEach(input => {
-                input.addEventListener('change', function () {
+                input.addEventListener('change', function() {
                     const id = this.getAttribute('data-id');
                     const quantity = parseInt(this.value);
                     const product = cart.find(product => product.id == id);
@@ -156,21 +156,30 @@
             });
 
             // Proceder a la reserva
-            document.getElementById('proceed-to-reservation').addEventListener('click', function () {
+            document.getElementById('proceed-to-reservation').addEventListener('click', function() {
                 if (cart.length > 0) {
-                    fetch('/reserve', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        },
-                        body: JSON.stringify({ cart })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        localStorage.removeItem('cart');
-                        window.location.href = `/reservation/${data.id}`;
-                    });
+                    fetch("{{ route('orders.store') }}", {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                            },
+                            body: JSON.stringify({
+                                cart
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.id) {
+                                localStorage.removeItem('cart');
+                                window.location.href = `/orders/gracias/${data.id}`;
+                            } else {
+                                alert(data.message || 'Error al procesar el pedido');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
                 } else {
                     alert('El carrito está vacío');
                 }
@@ -178,4 +187,5 @@
         });
     </script>
 </body>
+
 </html>
