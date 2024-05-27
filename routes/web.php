@@ -54,13 +54,13 @@ Route::resource('orders', OrderController::class);
 Route::resource('orderList', OrderListController::class);
 
 
+Route::post('/orders/store', [OrderController::class, 'store'])->middleware('auth')->name('orders.store');
+Route::get('/orders/gracias/{id}', [OrderController::class, 'gracias'])->middleware('auth')->name('orders.gracias');
+
 Route::get('/cart/add', [OrderController::class, 'add'])->name('add');
 Route::get('/cart/checkout', [OrderController::class, 'checkout'])->name('checkout');
 
-
-
-
-
+Route::get('/orders/gracias/{order}', [OrderListController::class, 'thankYou'])->name('orders.gracias');
 
 
 

@@ -25,7 +25,7 @@ class CartController extends Controller
             $product = \App\Models\Product::find($item['id']);
             return $sum + ($product->price * $item['quantity']);
         }, 0);
-        $order->status = 'pending';
+        $order->status = 'completed';
         $order->save();
 
         foreach ($cart as $item) {

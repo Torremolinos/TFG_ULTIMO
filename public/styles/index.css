@@ -38,7 +38,7 @@
     --footParts--padding: 2rem;
     --h1--font-size: 3rem;
     --s2--font-size: 2rem;
-    --s2--max-height: 1200px; 
+    --s2--max-height:300px; 
     --font-family: "Pacifico"!important;
   }
   
@@ -53,7 +53,7 @@
       --footParts--padding: 2rem;
       --h1--font-size: 3rem;
       --s2--font-size: 1rem;
-      --s2--max-height: 37.5rem; 
+      --s2--max-height: 20.5rem; 
     }
   }
   h1 {

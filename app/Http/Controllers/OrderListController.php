@@ -40,6 +40,16 @@ class OrderListController extends Controller
 
     public function thankYou(Order $order)
     {
-        return view('orders.gracias', compact('order'));
+        // Generar un número de factura aleatorio
+        $receiptCode = mt_rand(100000, 999999);
+
+        // Obtener los datos del pedido con los detalles de los productos
+        $order = Order::with('orderItems.product')->find($order->id);
+
+        // Cambiar el estado del pedido a 'complete'
+        $order->status = 'complete';
+        $order->save();
+
+        return view('orders.gracias', compact('order', 'receiptCode'));
     }
 }
