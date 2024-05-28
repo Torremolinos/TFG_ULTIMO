@@ -42,7 +42,7 @@
     }
 
     .btn-primary-custom:hover {
-        background-color: rgb(216 186 147 / 70%);;
+        background-color: rgb(216 186 147 / 70%);
         border-color: #5a4c14;
     }
 
@@ -52,6 +52,10 @@
 
     .navbar-toggler-icon {
         background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+    }
+
+    .table-custom td, .table-custom th {
+        vertical-align: middle; /* Alineación vertical al medio */
     }
     </style>
 </head>
@@ -151,34 +155,28 @@
             </div>
         </div>
     </section>
-
     <footer class="pie-pagina">
         <section class="grupo-1">
             <div class="box">
                 <figure>
-                    <a href="index.html">
-                        <img src="/assets/logo/logo.png" alt="Logo MerakiHandMade">
+                    <a href="{{'/'}}">
+                        <img src=/assets/logo/logo.png alt="Logo MerakiHandMade">
                     </a>
                 </figure>
             </div>
             <div class="box">
                 <h2>SOBRE NOSOTROS</h2>
-                <a href="https://www.instagram.com/meraki_handmadelove/?hl=es">Quienes Somos</a>
-                <a href="https://larian.com/playtest">Donde estamos</a>
-                <a href="https://larian.com/careers">Contactanos</a>
+                <a href="{{'/sobre'}}">Quienes Somos</a>
+                <a href="{{'/donde'}}">Donde estamos</a>
+                <a href="{{'/contacto'}}">Contactanos</a>
             </div>
             <div class="box">
                 <div class="red-social">
                     <h2>REDES SOCIALES</h2>
-                    <a href="#"><img src="/assets/icons/5296520_bubble_chat_mobile_whatsapp_whatsapp logo_icon.png"
-                            alt=""></a>
-                    <a href="https://www.instagram.com/meraki_handmadelove/?hl=es"><img
-                            src="/assets/icons/5296500_fb_social media_facebook_facebook logo_social network_icon.png"
-                            alt=""></a>
-                    <a href="https://www.linkedin.com/showcase/meraki-boutiques/about/"><img
-                            src="/assets/icons/5296501_linkedin_network_linkedin logo_icon.png" alt=""></a>
-                    <a href="https://www.instagram.com/meraki_handmadelove/?hl=es"><img
-                            src="/assets/icons/5296765_camera_instagram_instagram logo_icon.png" alt=""></a>
+                    <a href="#"><img src="/assets/icons/5296520_bubble_chat_mobile_whatsapp_whatsapp logo_icon.png" alt=""></a>
+                    <a href="https://www.instagram.com/meraki_handmadelove/?hl=es"><img src="/assets/icons/5296500_fb_social media_facebook_facebook logo_social network_icon.png" alt=""></a>
+                    <a href="https://www.linkedin.com/showcase/meraki-boutiques/about/"><img src="/assets/icons/5296501_linkedin_network_linkedin logo_icon.png" alt=""></a>
+                    <a href="https://www.instagram.com/meraki_handmadelove/?hl=es"><img src="/assets/icons/5296765_camera_instagram_instagram logo_icon.png" alt=""></a>
                 </div>
             </div>
         </section>
@@ -290,7 +288,7 @@
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                 },
                 body: JSON.stringify({ cart })
             })

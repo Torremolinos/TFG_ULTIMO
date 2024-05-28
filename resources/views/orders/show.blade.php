@@ -82,16 +82,16 @@
         <section class="grupo-1">
             <div class="box">
                 <figure>
-                    <a href="index.html">
-                        <img src="/assets/logo/logo.png" alt="Logo MerakiHandMade">
+                    <a href="{{'/'}}">
+                        <img src=/assets/logo/logo.png alt="Logo MerakiHandMade">
                     </a>
                 </figure>
             </div>
             <div class="box">
                 <h2>SOBRE NOSOTROS</h2>
-                <a href="https://www.instagram.com/meraki_handmadelove/?hl=es">Quienes Somos</a>
-                <a href="https://larian.com/playtest">Donde estamos</a>
-                <a href="https://larian.com/careers">Contactanos</a>
+                <a href="{{'/sobre'}}">Quienes Somos</a>
+                <a href="{{'/donde'}}">Donde estamos</a>
+                <a href="{{'/contacto'}}">Contactanos</a>
             </div>
             <div class="box">
                 <div class="red-social">

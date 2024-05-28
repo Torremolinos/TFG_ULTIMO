@@ -46,8 +46,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/products/{id}', [ProductController::class, 'show']);
-Route::post('/cart/checkout', [CartController::class, 'checkout'])->middleware('auth');
+// Route::get('/products/{id}', [ProductController::class, 'show']);
+// Route::post('/cart/checkout', [CartController::class, 'checkout'])->middleware('auth');
 
 Route::resource('products', ProductController::class);
 Route::resource('orders', OrderController::class);
@@ -60,7 +60,7 @@ Route::get('/orders/gracias/{id}', [OrderController::class, 'gracias'])->middlew
 Route::get('/cart/add', [OrderController::class, 'add'])->name('add');
 Route::get('/cart/checkout', [OrderController::class, 'checkout'])->name('checkout');
 
-Route::get('/orders/gracias/{order}', [OrderListController::class, 'thankYou'])->name('orders.gracias');
+// Route::get('/orders/gracias/{order}', [OrderListController::class, 'thankYou'])->name('orders.gracias');
 
 
 

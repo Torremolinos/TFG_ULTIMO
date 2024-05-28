@@ -147,7 +147,7 @@
         <section class="grupo-1">
             <div class="box">
                 <figure>
-                    <a href="index.html">
+                    <a href="{{'/'}}">
                         <img src=/assets/logo/logo.png alt="Logo MerakiHandMade">
                     </a>
                 </figure>
@@ -171,6 +171,11 @@
         <div class="grupo-2">
             © 2024 MerakiHandMadeLove. Todos los derechos reservados.</div>
     </footer>
+    <script>
+              const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartCount = document.getElementById('cart-count');
+            cartCount.textContent = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+    </script>
     <script src="/scripts/index.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>

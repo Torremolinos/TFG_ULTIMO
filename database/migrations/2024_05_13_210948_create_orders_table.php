@@ -15,11 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->decimal('total_price', 10, 2)->nullable();
-            $table->string('payment_method')->nullable();
-            $table->string('payment_status')->nullable();
             $table->string('status');
-            $table->string('currency')->nullable();
-            $table->text('notes')->nullable();
             $table->timestamps();
         });
     }

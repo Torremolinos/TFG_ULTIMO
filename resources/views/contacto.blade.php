@@ -147,7 +147,7 @@
         <section class="grupo-1">
             <div class="box">
                 <figure>
-                    <a href="index.html">
+                    <a href="{{'/'}}">
                         <img src=/assets/logo/logo.png alt="Logo MerakiHandMade">
                     </a>
                 </figure>
@@ -156,7 +156,7 @@
                 <h2>SOBRE NOSOTROS</h2>
                 <a href="{{'/sobre'}}">Quienes Somos</a>
                 <a href="{{'/donde'}}">Donde estamos</a>
-                <a href="{{'/sobre'}}">Contáctanos</a>
+                <a href="{{'/contacto'}}">Contactanos</a>
             </div>
             <div class="box">
                 <div class="red-social">
@@ -183,6 +183,12 @@
             alert('Formulario enviado');
             window.location.href = '/';
         });
+        
+    </script>
+       <script>
+              const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartCount = document.getElementById('cart-count');
+            cartCount.textContent = cartItems.reduce((acc, item) => acc + item.quantity, 0);
     </script>
 </body>
 

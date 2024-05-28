@@ -151,16 +151,16 @@
         <section class="grupo-1">
             <div class="box">
                 <figure>
-                    <a href="index.html">
-                        <img src="/assets/logo/logo.png" alt="Logo MerakiHandMade">
+                    <a href="{{'/'}}">
+                        <img src=/assets/logo/logo.png alt="Logo MerakiHandMade">
                     </a>
                 </figure>
             </div>
             <div class="box">
                 <h2>SOBRE NOSOTROS</h2>
-                <a href="https://www.instagram.com/meraki_handmadelove/?hl=es">Quienes Somos</a>
-                <a href="https://larian.com/playtest">Donde estamos</a>
-                <a href="https://larian.com/careers">Contactanos</a>
+                <a href="{{'/sobre'}}">Quienes Somos</a>
+                <a href="{{'/donde'}}">Donde estamos</a>
+                <a href="{{'/contacto'}}">Contactanos</a>
             </div>
             <div class="box">
                 <div class="red-social">
@@ -181,8 +181,12 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script>
       document.addEventListener('DOMContentLoaded', function() {
+        
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
+
+            const cartCount = document.getElementById('cart-count');
+            cartCount.textContent = cartItems.reduce((acc, item) => acc + item.quantity, 0);
             document.querySelectorAll('.add-to-cart').forEach(button => {
                 button.addEventListener('click', function() {
                     const id = this.getAttribute('data-id');
@@ -203,6 +207,11 @@
                 });
             });
         });
+   
+
+       
+            const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+            
     </script>
 </body>
 </html>
