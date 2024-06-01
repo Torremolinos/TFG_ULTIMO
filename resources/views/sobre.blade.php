@@ -1,56 +1,58 @@
 <!DOCTYPE html>
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MerakiHandMadeLove - Carrito</title>
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('styles/gallery.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="user-id" content="{{ auth()->user()->id ?? '' }}">
     <style>
-    :root {
-        --color-white: rgb(216, 186, 147);
-        --backgroundBody-color: rgb(216 186 147 / 70%);
-        --navbar-toggler-color: white;
-        /* Puedes cambiar a black si prefieres */
-    }
+        :root {
+            --color-white: rgb(216, 186, 147);
+            --backgroundBody-color: rgb(216 186 147 / 70%);
+            --navbar-toggler-color: white;
+        }
 
-    body {
-        background-color: var(--backgroundBody-color);
-    }
+        body {
+            background-color: var(--backgroundBody-color);
+        }
 
-    .navbar-custom {
-        background-color: var(--color-white);
-    }
+        .navbar-custom {
+            background-color: var(--color-white);
+        }
 
-    .table-custom thead {
-        background-color: var(--color-white);
-        color: white;
-    }
+        .table-custom thead {
+            background-color: var(--color-white);
+            color: white;
+        }
 
-    .table-custom tbody {
-        background-color: white;
-    }
+        .table-custom tbody {
+            background-color: white;
+        }
 
-    .btn-primary-custom {
-        background-color: var(--color-white);
-        border-color: var(--color-white);
-    }
+        .btn-primary-custom {
+            background-color: var(--color-white);
+            border-color: var(--color-white);
+        }
 
-    .btn-primary-custom:hover {
-        background-color: rgb(216 186 147 / 70%);;
-        border-color: #5a4c14;
-    }
+        .btn-primary-custom:hover {
+            background-color: rgb(216 186 147 / 70%);
+            border-color: #5a4c14;
+        }
 
-    .navbar-toggler {
-        border-color: var(--navbar-toggler-color);
-    }
+        .navbar-toggler {
+            border-color: var(--navbar-toggler-color);
+        }
 
-    .navbar-toggler-icon {
-        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
-    }
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+        }
     </style>
 </head>
 
@@ -59,8 +61,7 @@
         <a class="navbar-brand" href="/">
             <img src="/assets/logo/logo.png" alt="MerakiHandMadeLove" class="logo">
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
@@ -68,15 +69,13 @@
                 @if (Route::has('login'))
                 @auth
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Hola {{ auth()->user()->name }}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <form method="POST" action="{{ route('logout') }}" id="logout-form">
                             @csrf
-                            <a class="dropdown-item" href="#"
-                                onclick="document.getElementById('logout-form').submit();">Cerrar sesión</a>
+                            <a class="dropdown-item" href="#" onclick="document.getElementById('logout-form').submit();">Cerrar sesión</a>
                         </form>
                     </div>
                 </li>
@@ -91,13 +90,16 @@
                 @endif
                 @endauth
                 @endif
+                @if (Route::has('login'))
+                @auth
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('/orders') }}">
-                        <img class="shoppingCart"
-                            src="/assets/svg/shopping_cart_24dp_FILL0_wght400_GRAD0_opsz24 (1).svg" alt="Carrito">
+                        <img class="shoppingCart" src="/assets/svg/shopping_cart_24dp_FILL0_wght400_GRAD0_opsz24 (1).svg" alt="Carrito">
                         <span id="cart-count">0</span>
                     </a>
                 </li>
+                @endauth
+                @endif
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('/') }}">Inicio</a>
                 </li>
@@ -114,9 +116,7 @@
                     <a class="nav-link" href="{{ url('/contacto') }}">Contacto</a>
                 </li>
                 @auth
-            
                 @endauth
-               
             </ul>
         </div>
     </nav>
@@ -170,9 +170,22 @@
             © 2024 MerakiHandMadeLove. Todos los derechos reservados.</div>
     </footer>
     <script>
-              const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-            const cartCount = document.getElementById('cart-count');
-            cartCount.textContent = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+        const userId = document.querySelector('meta[name="user-id"]').getAttribute('content');
+        const cartKey = `cart_${userId}`;
+        let cart = userId ? JSON.parse(localStorage.getItem(cartKey)) || [] : [];
+        const cartItems = document.getElementById('cart-items');
+        const totalAmount = document.getElementById('total-amount');
+        const cartCount = document.getElementById('cart-count');
+        const emptyCartButton = document.getElementById('empty-cart');
+        let total = 0;
+
+        // Actualizar el contador del carrito
+        function updateCartCount() {
+            const itemCount = cart.reduce((count, product) => count + product.quantity, 0);
+            cartCount.textContent = itemCount;
+        }
+
+        updateCartCount(); // Llamar a la función al cargar la página
     </script>
     <script src="/scripts/index.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

@@ -22,6 +22,10 @@ class UserResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-users'; // https://heroicons.com/  para cambiar los iconos. Borra apartir del o-
 
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
     public static function form(Form $form): Form
     {
         return $form

@@ -12,13 +12,6 @@ class Order extends Model
     protected $fillable = [
         'user_id',
         'total_price',
-        'payment_method',
-        'payment_status',
-        'status', 
-        'currency',
-        'shipping_amount',
-        'shipping_method',
-        'notes'
     ];
     public function user()
     {
@@ -29,7 +22,4 @@ class Order extends Model
     {
         return $this->hasMany(OrderItem::class);
     }
-
-
-   
 }

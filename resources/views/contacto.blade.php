@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,49 +10,69 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('styles/gallery.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="user-id" content="{{ auth()->user()->id ?? '' }}">
     <style>
-    :root {
-        --color-white: rgb(216, 186, 147);
-        --backgroundBody-color: rgb(216 186 147 / 70%);
-        --navbar-toggler-color: white;
-        /* Puedes cambiar a black si prefieres */
-    }
+        :root {
+            --color-white: rgb(216, 186, 147);
+            --backgroundBody-color: rgb(216 186 147 / 70%);
+            --navbar-toggler-color: white;
+        }
 
-    body {
-        background-color: var(--backgroundBody-color);
-    }
+        body {
+            background-color: var(--backgroundBody-color);
+        }
 
-    .navbar-custom {
-        background-color: var(--color-white);
-    }
+        .navbar-custom {
+            background-color: var(--color-white);
+        }
 
-    .table-custom thead {
-        background-color: var(--color-white);
-        color: white;
-    }
+        .table-custom thead {
+            background-color: var(--color-white);
+            color: white;
+        }
 
-    .table-custom tbody {
-        background-color: white;
-    }
+        .table-custom tbody {
+            background-color: white;
+        }
 
-    .btn-primary-custom {
-        background-color: var(--color-white);
-        border-color: var(--color-white);
-    }
+        .btn-primary-custom {
+            background-color: var(--color-white);
+            border-color: var(--color-white);
+        }
 
-    .btn-primary-custom:hover {
-        background-color: rgb(216 186 147 / 70%);;
-        border-color: #5a4c14;
-    }
+        .btn-primary-custom:hover {
+            background-color: rgb(216 186 147 / 70%);
+            border-color: #5a4c14;
+        }
 
-    .navbar-toggler {
-        border-color: var(--navbar-toggler-color);
-    }
+        .navbar-toggler {
+            border-color: var(--navbar-toggler-color);
+        }
 
-    .navbar-toggler-icon {
-        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
-    }
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+        }
+
+        .form-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .form-container .btn-primary {
+            width: 100px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .form-container textarea {
+            min-height: 150px;
+        }
     </style>
 </head>
 
@@ -91,6 +113,8 @@
                 @endif
                 @endauth
                 @endif
+                @if (Route::has('login'))
+                @auth
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('/orders') }}">
                         <img class="shoppingCart"
@@ -98,6 +122,8 @@
                         <span id="cart-count">0</span>
                     </a>
                 </li>
+                @endauth
+                @endif
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('/') }}">Inicio</a>
                 </li>
@@ -114,33 +140,37 @@
                     <a class="nav-link" href="{{ url('/contacto') }}">Contacto</a>
                 </li>
                 @auth
-            
                 @endauth
-               
             </ul>
         </div>
     </nav>
 
     <section class="d-flex flex-column align-items-center py-5">
-        <form class="w-50" id="contactForm">
-            <div class="form-group">
-                <label for="name">Nombre</label>
-                <input type="text" class="form-control" id="name" name="name" required pattern="[A-Z][a-zA-Z\s]*" title="La primera letra debe ser mayúscula.">
-            </div>
-            <div class="form-group">
-                <label for="phone">Teléfono</label>
-                <input type="tel" class="form-control" id="phone" name="phone" required pattern="(\+34|0034|34)?[6|7][0-9]{8}" title="Número de teléfono válido de España.">
-            </div>
-            <div class="form-group">
-                <label for="email">Correo Electrónico</label>
-                <input type="email" class="form-control" id="email" name="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}" title="Correo electrónico válido.">
-            </div>
-            <div class="form-group">
-                <label for="message">Mensaje</label>
-                <textarea class="form-control" id="message" name="message" rows="4" required minlength="30" title="El mensaje debe tener al menos 30 caracteres."></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Enviar</button>
-        </form>
+        <div class="form-container">
+            <form id="contactForm">
+                <div class="form-group">
+                    <label for="name">Nombre</label>
+                    <input type="text" class="form-control" id="name" name="name" required
+                        pattern="[A-Z][a-zA-Z\s]*" title="La primera letra debe ser mayúscula.">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Teléfono</label>
+                    <input type="tel" class="form-control" id="phone" name="phone" required
+                        pattern="(\+34|0034|34)?[6|7][0-9]{8}" title="Número de teléfono válido de España.">
+                </div>
+                <div class="form-group">
+                    <label for="email">Correo Electrónico</label>
+                    <input type="email" class="form-control" id="email" name="email" required
+                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}" title="Correo electrónico válido.">
+                </div>
+                <div class="form-group">
+                    <label for="message">Mensaje</label>
+                    <textarea class="form-control" id="message" name="message" rows="4" required
+                        minlength="30" title="El mensaje debe tener al menos 30 caracteres."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </form>
+        </div>
     </section>
 
     <footer class="pie-pagina">
@@ -161,10 +191,15 @@
             <div class="box">
                 <div class="red-social">
                     <h2>REDES SOCIALES</h2>
-                    <a href="#"><img src="/assets/icons/5296520_bubble_chat_mobile_whatsapp_whatsapp logo_icon.png" alt=""></a>
-                    <a href="https://www.instagram.com/meraki_handmadelove/?hl=es"><img src="/assets/icons/5296500_fb_social media_facebook_facebook logo_social network_icon.png" alt=""></a>
-                    <a href="https://www.linkedin.com/showcase/meraki-boutiques/about/"><img src="/assets/icons/5296501_linkedin_network_linkedin logo_icon.png" alt=""></a>
-                    <a href="https://www.instagram.com/meraki_handmadelove/?hl=es"><img src="/assets/icons/5296765_camera_instagram_instagram logo_icon.png" alt=""></a>
+                    <a href="#"><img src="/assets/icons/5296520_bubble_chat_mobile_whatsapp_whatsapp logo_icon.png"
+                            alt=""></a>
+                    <a href="https://www.instagram.com/meraki_handmadelove/?hl=es"><img
+                            src="/assets/icons/5296500_fb_social media_facebook_facebook logo_social network_icon.png"
+                            alt=""></a>
+                    <a href="https://www.linkedin.com/showcase/meraki-boutiques/about/"><img
+                            src="/assets/icons/5296501_linkedin_network_linkedin logo_icon.png" alt=""></a>
+                    <a href="https://www.instagram.com/meraki_handmadelove/?hl=es"><img
+                            src="/assets/icons/5296765_camera_instagram_instagram logo_icon.png" alt=""></a>
                 </div>
             </div>
         </section>
@@ -178,18 +213,32 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script>
-        document.getElementById('contactForm').addEventListener('submit', function(event) {
+        document.getElementById('contactForm').addEventListener('submit', function (event) {
             event.preventDefault();
             alert('Formulario enviado');
             window.location.href = '/';
         });
-        
     </script>
-       <script>
-              const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-            const cartCount = document.getElementById('cart-count');
-            cartCount.textContent = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+
+    <script>
+        const userId = document.querySelector('meta[name="user-id"]').getAttribute('content');
+        const cartKey = `cart_${userId}`;
+        let cart = userId ? JSON.parse(localStorage.getItem(cartKey)) || [] : [];
+        const cartItems = document.getElementById('cart-items');
+        const totalAmount = document.getElementById('total-amount');
+        const cartCount = document.getElementById('cart-count');
+        const emptyCartButton = document.getElementById('empty-cart');
+        let total = 0;
+
+        // Actualizar el contador del carrito
+        function updateCartCount() {
+            const itemCount = cart.reduce((count, product) => count + product.quantity, 0);
+            cartCount.textContent = itemCount;
+        }
+
+        updateCartCount();
     </script>
+
 </body>
 
 </html>

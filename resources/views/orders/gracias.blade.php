@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,13 +8,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('styles/gallery.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="user-id" content="{{ auth()->user()->id ?? '' }}">
     <style>
         :root {
             --color-white: rgb(216, 186, 147);
             --backgroundBody-color: rgb(216 186 147 / 70%);
             --navbar-toggler-color: white;
-            --footer-background-color: rgb(200, 170, 130);
         }
 
         body {
@@ -26,14 +26,13 @@
             background-color: var(--color-white);
         }
 
-        .table-custom {
-            background-color: white;
-            border: 1px solid black;
+        .table-custom thead {
+            background-color: var(--color-white);
+            color: white;
         }
 
-        .table-custom th,
-        .table-custom td {
-            border: 1px solid black;
+        .table-custom tbody {
+            background-color: white;
         }
 
         .btn-primary-custom {
@@ -55,7 +54,6 @@
         }
     </style>
 </head>
-
 <body>
     <nav class="navbar navbar-expand-lg navbar-custom">
         <a class="navbar-brand" href="/">
@@ -90,12 +88,16 @@
                 @endif
                 @endauth
                 @endif
+                @if (Route::has('login'))
+                @auth
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('/orders') }}">
                         <img class="shoppingCart" src="/assets/svg/shopping_cart_24dp_FILL0_wght400_GRAD0_opsz24 (1).svg" alt="Carrito">
                         <span id="cart-count">0</span>
                     </a>
                 </li>
+                @endauth
+                @endif
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('/') }}">Inicio</a>
                 </li>
@@ -130,7 +132,7 @@
             <div class="receipt-container">
                 <h3 class="text-center">Recibo de Pedido</h3>
 
-                <p class="text-center mt-4"><strong>Número de Factura:</strong> <span id="receiptCode"></span></p>
+                <p class="text-center mt-4"><strong>Número de Factura:</strong> <span>{{ $pedidos->order_number }}</span></p>
 
                 <p class="text-center mt-4"><strong>Nombre del Cliente:</strong> <span>{{ auth()->user()->name }}</span></p>
 
@@ -225,6 +227,7 @@
             ]
         };
 
+        
         // Rellenar los detalles del pedido al cargar la página
         document.addEventListener('DOMContentLoaded', () => populateOrderDetails(order));
     </script>
