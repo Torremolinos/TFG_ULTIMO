@@ -52,6 +52,15 @@
         .navbar-toggler-icon {
             background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
         }
+
+        a {
+            color: black;
+        }
+
+        .pagination-container {
+            display: flex;
+            justify-content: center;
+        }
     </style>
 </head>
 <body>
@@ -131,7 +140,7 @@
                 @endphp
                 <li class="cards_item">
                     <div class="card">
-                        <div class="card_image"><img src="{{ asset($imagePath) }}" alt="{{ $product->name }}"></div>
+                        <div class="card_image"><a href="{{ asset($imagePath) }}" target="_blank"><img src="{{ asset($imagePath) }}" alt="{{ $product->name }}"></a></div>
                         <div class="card_content">
                             <h2 class="card_title">{{ $product->name }}</h2>
                             <p class="card_text">{{ $product->description }}</p>
@@ -146,6 +155,9 @@
                 </li>
                 @endforeach
             </ul>
+        </div>
+        <div class="pagination-container">
+         {{ $products->links('pagination::bootstrap-5') }}   
         </div>
     </section>
     <footer class="pie-pagina">

@@ -80,6 +80,10 @@
         .btn-group-vertical .btn:last-child {
             margin-bottom: 0;
         }
+
+        a {
+            color: var(--color-white);
+        }
     </style>
 </head>
 <body>
@@ -230,7 +234,7 @@
 
                 row.innerHTML = `
             <td>${product.name}</td>
-            <td>€${product.price.toFixed(2)}</td>
+            <td>${product.price.toFixed(2)}€</td>
             <td>
                 <div class="input-group">
                     <div class="input-group-prepend">
