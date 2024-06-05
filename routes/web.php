@@ -49,7 +49,6 @@ Route::middleware('auth')->group(function () {
 
 Route::resource('products', ProductController::class);
 Route::resource('orders', OrderController::class);
-Route::resource('orderList', OrderListController::class);
 
 
 Route::post('/orders/store', [OrderController::class, 'store'])->middleware('auth')->name('orders.store');

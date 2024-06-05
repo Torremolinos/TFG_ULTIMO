@@ -6,11 +6,22 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Order;
 use App\Models\OrderItem;
-use App\Models\Pedidos; // Asegúrate de incluir el modelo Pedidos
+use App\Models\Pedidos;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * Clase OrderController
+ * 
+ * Controlador para gestionar órdenes.
+ */
 class OrderController extends Controller
 {
+    /**
+     * Almacena una nueva orden.
+     * 
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store(Request $request)
     {
         $cart = $request->input('cart', []);
@@ -51,18 +62,35 @@ class OrderController extends Controller
         return response()->json(['id' => $order->id, 'message' => 'Pedido realizado con éxito']);
     }
 
+    /**
+     * Muestra la página de agradecimiento para un pedido específico.
+     * 
+     * @param int $id
+     * @return \Illuminate\View\View
+     */
     public function gracias($id)
     {
         $pedidos = Pedidos::findOrFail($id);
         return view('orders.gracias', compact('pedidos'));
     }
 
+    /**
+     * Muestra una lista de órdenes del usuario autenticado.
+     * 
+     * @return \Illuminate\View\View
+     */
     public function index()
     {
         $orders = Order::where('user_id', Auth::id())->get();
         return view('orders.index', compact('orders'));
     }
 
+    // /**
+    //  * Muestra una orden específica.
+    //  * 
+    //  * @param \App\Models\Order $order
+    //  * @return \Illuminate\View\View
+    //  */
     // public function show(Order $order)
     // {
     //     $this->authorize('view', $order);
