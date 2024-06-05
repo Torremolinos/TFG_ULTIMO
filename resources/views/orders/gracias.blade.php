@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -54,6 +55,7 @@
         }
     </style>
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg navbar-custom">
         <a class="navbar-brand" href="/">
@@ -98,6 +100,11 @@
                 </li>
                 @endauth
                 @endif
+                @auth
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/orders/misOrdenes') }}">Mis Pedidos</a>
+                </li>
+                @endauth
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('/') }}">Inicio</a>
                 </li>
@@ -122,9 +129,9 @@
         <div class="container py-5">
             <div class="text-center mb-4">
                 <figure>
-                   
-                        <img src="/assets/gracias/gracias.jpg" alt="Logo MerakiHandMade" class="img-fluid">
-              
+
+                    <img src="/assets/gracias/gracias.jpg" alt="Logo MerakiHandMade" class="img-fluid">
+
                 </figure>
             </div>
             <h2 class="mb-4 text-center">Gracias por su pedido</h2>
@@ -139,7 +146,8 @@
                 <p class="text-center mt-4"><strong>Tienes 7 días hábiles para recoger el producto en la
                         tienda.</strong></p>
                 <div class="d-flex justify-content-center mb-4">
-                    <a href="{{ url('/products') }}" class="btn btn-primary btn-primary-custom">Seguir comprando</a>
+                    <a href="{{ url('/products') }}" class="btn btn-primary btn-primary-custom mr-2">Seguir comprando</a>
+                    <a href="{{ url('/orders/misOrdenes') }}" class="btn btn-primary btn-primary-custom">Ir a mis pedidos</a>
                 </div>
             </div>
         </div>
@@ -227,7 +235,7 @@
             ]
         };
 
-        
+
         // Rellenar los detalles del pedido al cargar la página
         document.addEventListener('DOMContentLoaded', () => populateOrderDetails(order));
     </script>

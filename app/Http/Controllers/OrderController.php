@@ -30,7 +30,7 @@ class OrderController extends Controller
             return response()->json(['message' => 'El carrito está vacío'], 400);
         }
 
-        $total_price = array_reduce($cart, function($carry, $item) {
+        $total_price = array_reduce($cart, function ($carry, $item) {
             return $carry + $item['price'] * $item['quantity'];
         }, 0);
 
@@ -85,15 +85,11 @@ class OrderController extends Controller
         return view('orders.index', compact('orders'));
     }
 
-    // /**
-    //  * Muestra una orden específica.
-    //  * 
-    //  * @param \App\Models\Order $order
-    //  * @return \Illuminate\View\View
-    //  */
-    // public function show(Order $order)
-    // {
-    //     $this->authorize('view', $order);
-    //     return view('orders.show', compact('order'));
-    // }
+    public function myOrders()
+    {
+        $userId = Auth::id();
+        $orders = Pedidos::where('user_id', $userId)->with(['order', 'orderItems.product'])->get();
+
+        return view('orders.misOrdenes', compact('orders'));
+    }
 }

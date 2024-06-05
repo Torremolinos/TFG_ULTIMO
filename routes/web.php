@@ -19,6 +19,9 @@ use App\Http\Controllers\CartController;
 |
 */
 
+Route::get('orders/misOrdenes', [OrderController::class, 'myOrders'])->middleware('auth')->name('orders.misOrdenes');
+
+
 Route::get('/contacto', function () {
     return view('contacto');
 });

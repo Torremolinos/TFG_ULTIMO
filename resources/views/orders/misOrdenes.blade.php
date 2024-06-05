@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MerakiHandMadeLove - Carrito</title>
+    <title>MerakiHandMadeLove - Mis Pedidos</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -16,10 +17,17 @@
             --color-white: rgb(216, 186, 147);
             --backgroundBody-color: rgb(216 186 147 / 70%);
             --navbar-toggler-color: white;
+            --btn-primary-bg: rgb(216, 186, 147);
+            --btn-primary-border: rgb(216, 186, 147);
+            --btn-primary-hover-bg: rgb(185, 159, 125);
+            --btn-primary-hover-border: rgb(185, 159, 125);
         }
 
         body {
             background-color: var(--backgroundBody-color);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         .navbar-custom {
@@ -36,13 +44,14 @@
         }
 
         .btn-primary-custom {
-            background-color: var(--color-white);
-            border-color: var(--color-white);
+            background-color: var(--btn-primary-bg);
+            border-color: var(--btn-primary-border);
+            color: white;
         }
 
         .btn-primary-custom:hover {
-            background-color: rgb(216 186 147 / 70%);
-            border-color: #5a4c14;
+            background-color: var(--btn-primary-hover-bg);
+            border-color: var(--btn-primary-hover-border);
         }
 
         .navbar-toggler {
@@ -52,8 +61,34 @@
         .navbar-toggler-icon {
             background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
         }
+
+        .main-content {
+            flex: 1;
+        }
+
+        .footer {
+            margin-top: auto;
+        }
+
+        .table td,
+        .table th {
+            vertical-align: middle;
+        }
+
+        .btn-group-vertical .btn {
+            margin-bottom: 5px;
+        }
+
+        .btn-group-vertical .btn:last-child {
+            margin-bottom: 0;
+        }
+
+        a {
+            color: black;
+        }
     </style>
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg navbar-custom">
         <a class="navbar-brand" href="/">
@@ -123,32 +158,54 @@
             </ul>
         </div>
     </nav>
-    <section class="d-flex flex-column align-items-center py-5">
-        <div class="container text-center">
-            <div class="row justify-content-center">
-                <div class="col-12 mb-4">
-                    <h2>Ubicación</h2>
-                </div>
-                <div class="col-md-8">
-                    <div class="embed-responsive embed-responsive-16by9 mb-4">
-                        <iframe class="embed-responsive-item" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3519.7524093101006!2d-16.739850223939698!3d28.093094208371493!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xc6a974dbc22e5ab%3A0x8742816c5e098a4b!2sAv.%20de%20Bruselas%2C%2017%2C%2038660%20Costa%20Adeje%2C%20Santa%20Cruz%20de%20Tenerife!5e0!3m2!1ses!2ses!4v1716322599717!5m2!1ses!2ses" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                    </div>
-                </div>
-                <div class="col-md-8">
-                    <h2>Horario de Atención</h2>
-                    <p>Lunes a Viernes: 9:00 AM - 6:00 PM</p>
-                    <p>Sábado: 10:00 AM - 4:00 PM</p>
-                    <p>Domingo: Cerrado</p>
-                </div>
+    <section class="main-content">
+        <div class="container py-5">
+            <h2 class="mb-4 text-center">Mis Pedidos</h2>
+            <div class="table-responsive">
+                <table class="table table-bordered text-center table-custom">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Nombre del Usuario</th>
+                            <th>Número del Pedido</th>
+                            <th>Productos</th>
+                            <th>Fecha de Realización</th>
+                            <th>Fecha de Expiración</th>
+                            <th>Precio Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($orders as $order)
+                        <tr>
+                            <td>{{ $order->user->name }}</td>
+                            <td>{{ $order->order_number }}</td>
+                            <td>
+                                <ul>
+                                    @foreach ($order->orderItems as $item)
+                                    <li>{{ $item->product->name }} ({{ $item->quantity }} x €{{ $item->unit_amount }})</li>
+                                    @endforeach
+                                </ul>
+                            </td>
+                            <td>{{ $order->created_at->format('Y-m-d') }}</td>
+                            <td>
+                                <?php
+                                    $expirationDate = date('Y-m-d', strtotime($order->created_at. ' + 7 days'));
+                                    echo $expirationDate;
+                                ?>
+                            </td>
+                            <td>€{{ $order->order->total_price }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </section>
-    <footer class="pie-pagina">
+    <footer class="footer pie-pagina">
         <section class="grupo-1">
             <div class="box">
                 <figure>
                     <a href="{{'/'}}">
-                        <img src=/assets/logo/logo.png alt="Logo MerakiHandMade">
+                        <img src="/assets/logo/logo.png" alt="Logo MerakiHandMade">
                     </a>
                 </figure>
             </div>
@@ -171,28 +228,9 @@
         <div class="grupo-2">
             © 2024 MerakiHandMadeLove. Todos los derechos reservados.</div>
     </footer>
-    <script src="/scripts/index.js"></script>
-    <script>
-           const userId = document.querySelector('meta[name="user-id"]').getAttribute('content');
-        const cartKey = `cart_${userId}`;
-        let cart = userId ? JSON.parse(localStorage.getItem(cartKey)) || [] : [];
-        const cartItems = document.getElementById('cart-items');
-        const totalAmount = document.getElementById('total-amount');
-        const cartCount = document.getElementById('cart-count');
-        const emptyCartButton = document.getElementById('empty-cart');
-        let total = 0;
-
-        // Actualizar el contador del carrito
-        function updateCartCount() {
-            const itemCount = cart.reduce((count, product) => count + product.quantity, 0);
-            cartCount.textContent = itemCount;
-        }
-
-        updateCartCount(); // Llamar a la función al cargar la página
-    </script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
 
 </html>

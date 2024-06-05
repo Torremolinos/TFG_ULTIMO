@@ -100,6 +100,11 @@
                 </li>
                 @endauth
                 @endif
+                @auth
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/orders/misOrdenes') }}">Mis Pedidos</a>
+                </li>
+                @endauth
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('/') }}">Inicio</a>
                 </li>
