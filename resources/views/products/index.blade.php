@@ -16,33 +16,22 @@
             --color-white: rgb(216, 186, 147);
             --backgroundBody-color: rgb(216 186 147 / 70%);
             --navbar-toggler-color: white;
+            --btn-primary-bg: rgb(216, 186, 147);
+            --btn-primary-border: rgb(216, 186, 147);
+            --btn-primary-hover-bg: rgb(185, 159, 125);
+            --btn-primary-hover-border: rgb(185, 159, 125);
         }
 
         body {
             background-color: var(--backgroundBody-color);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         .navbar-custom {
             background-color: var(--color-white);
-        }
-
-        .table-custom thead {
-            background-color: var(--color-white);
-            color: white;
-        }
-
-        .table-custom tbody {
-            background-color: white;
-        }
-
-        .btn-primary-custom {
-            background-color: var(--color-white);
-            border-color: var(--color-white);
-        }
-
-        .btn-primary-custom:hover {
-            background-color: rgb(216 186 147 / 70%);
-            border-color: #5a4c14;
+            padding: 0 20px;
         }
 
         .navbar-toggler {
@@ -53,13 +42,119 @@
             background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
         }
 
+        .main-content {
+            flex: 1;
+        }
+
+        .footer {
+            margin-top: auto;
+        }
+
+        .table td, .table th {
+            vertical-align: middle;
+        }
+
+        .btn-group-vertical .btn {
+            margin-bottom: 5px;
+        }
+
+        .btn-group-vertical .btn:last-child {
+            margin-bottom: 0;
+        }
+
         a {
             color: black;
         }
 
-        .pagination-container {
+        .footer .grupo-1 {
             display: flex;
             justify-content: center;
+            text-align: center;
+        }
+
+        .footer .box {
+            margin: 0 20px;
+        }
+
+        .footer .box h2 {
+            text-align: center;
+        }
+
+        .footer .box a {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        /* Responsiveness */
+        @media (max-width: 767px) {
+            .navbar-brand img {
+                max-width: 100px;
+            }
+
+            .navbar-nav {
+                text-align: center;
+            }
+
+            .navbar-collapse {
+                background-color: var(--color-white);
+            }
+
+            .cards {
+                display: flex;
+                flex-direction: column;
+                padding: 0;
+                margin: 0;
+            }
+
+            .cards_item {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+
+            .card {
+                margin-bottom: 20px;
+            }
+
+            .table-responsive {
+                overflow-x: auto;
+            }
+
+            .table thead {
+                display: none;
+            }
+
+            .table tr {
+                display: block;
+                margin-bottom: 15px;
+                border: 1px solid #ddd;
+                padding: 10px;
+                border-radius: 10px;
+                background-color: white;
+            }
+
+            .table td {
+                display: block;
+                text-align: right;
+                font-size: 13px;
+                border: none;
+                position: relative;
+                padding-left: 50%;
+            }
+
+            .table td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 10px;
+                width: 45%;
+                padding-right: 10px;
+                white-space: nowrap;
+                text-align: left;
+                font-weight: bold;
+            }
+
+            .table td:last-child {
+                border-bottom: 0;
+            }
         }
     </style>
 </head>
@@ -134,10 +229,10 @@
     </nav>
     <section>
         <div class="container mt-3">
-            <div id="alert-container"></div>
+            <div id="alert-container" class="alert-container"></div>
         </div>
         <div class="main">
-            <h1>Nuestros Productos</h1>
+            <h1 class="text-center">Nuestros Productos</h1>
             <ul class="cards" id="product-list">
                 @foreach ($products as $product)
                 @php
@@ -145,11 +240,17 @@
                 @endphp
                 <li class="cards_item">
                     <div class="card">
-                        <div class="card_image"><a href="{{ asset($imagePath) }}" target="_blank"><img src="{{ asset($imagePath) }}" alt="{{ $product->name }}"></a></div>
+                        <div class="card_image">
+                            <a href="#" data-toggle="modal" data-target="#imageModal" data-image="{{ asset($imagePath) }}">
+                                <img src="{{ asset($imagePath) }}" alt="{{ $product->name }}">
+                            </a>
+                        </div>
                         <div class="card_content">
                             <h2 class="card_title">{{ $product->name }}</h2>
                             <p class="card_text">{{ $product->description }}</p>
-                            <p class="card_text">€{{ $product->price }}</p>
+                            <div class="price-container">
+                                <p class="card_text">€{{ $product->price }}</p>
+                            </div>
                             @auth
                             <button class="btn card_btn add-to-cart" data-id="{{ $product->id }}" data-name="{{ $product->name }}" data-price="{{ $product->price }}">Comprar</button>
                             @else
@@ -165,7 +266,22 @@
          {{ $products->links('pagination::bootstrap-5') }}   
         </div>
     </section>
-    <footer class="pie-pagina">
+
+    <!-- Modal -->
+    <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <img id="modalImage" src="" class="img-fluid" alt="Product Image">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer pie-pagina">
         <section class="grupo-1">
             <div class="box">
                 <figure>
@@ -215,7 +331,7 @@
 
             function showAlert(message, type = 'success') {
                 const alert = document.createElement('div');
-                alert.className = `alert alert-${type} alert-dismissible fade show`;
+                alert.className = `alert alert-${type} alert-dismissible fade show alert-float`;
                 alert.role = 'alert';
                 alert.innerHTML = `
                     ${message}
@@ -252,6 +368,13 @@
                     updateCartCount();
                     showAlert(`${name} agregado exitosamente`);
                 }
+            });
+
+            $('#imageModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var imageSrc = button.data('image');
+                var modal = $(this);
+                modal.find('.modal-body #modalImage').attr('src', imageSrc);
             });
         });
     </script>

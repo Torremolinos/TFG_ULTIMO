@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contacto;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Order;
@@ -91,5 +92,27 @@ class OrderController extends Controller
         $orders = Pedidos::where('user_id', $userId)->with(['order', 'orderItems.product'])->get();
 
         return view('orders.misOrdenes', compact('orders'));
+    }
+
+    public function storeContact(Request $request)
+    {
+        // Validación de los datos
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'phone' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'message' => 'required|string|min:30',
+        ]);
+    
+        // Guardar los datos en la base de datos
+        $contacto = new Contacto();
+        $contacto->nombre = $request->input('name');
+        $contacto->telefono = $request->input('phone');
+        $contacto->email = $request->input('email');
+        $contacto->mensaje = $request->input('message');
+        $contacto->save();
+    
+        // Redirigir con mensaje de éxito
+        return redirect()->route('contacto')->with('success', 'Hemos recibido tu mensaje, pronto nos pondremos en contacto contigo. ¡Gracias!');
     }
 }

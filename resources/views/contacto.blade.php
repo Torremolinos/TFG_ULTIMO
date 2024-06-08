@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MerakiHandMadeLove - Carrito</title>
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+    <title>MerakiHandMadeLove - Contacto</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('styles/gallery.css') }}">
@@ -26,6 +24,7 @@
 
         .navbar-custom {
             background-color: var(--color-white);
+            padding: 0 20px;
         }
 
         .table-custom thead {
@@ -73,19 +72,52 @@
         .form-container textarea {
             min-height: 150px;
         }
+
+        .alert-floating {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1050;
+        }
+
         a {
             color: black;
         }
+
+        @media (max-width: 767px) {
+            .navbar-brand img {
+                max-width: 100px;
+            }
+
+            .navbar-nav {
+                text-align: center;
+            }
+
+            .navbar-collapse {
+                background-color: var(--color-white);
+            }
+
+            .navbar-nav .nav-item {
+                margin-bottom: 10px;
+            }
+
+            .navbar-nav .nav-item .nav-link {
+                padding: 10px;
+                display: block;
+            }
+
+            .form-container {
+                padding: 10px;
+            }
+        }
     </style>
 </head>
-
 <body>
     <nav class="navbar navbar-expand-lg navbar-custom">
         <a class="navbar-brand" href="/">
             <img src="/assets/logo/logo.png" alt="MerakiHandMadeLove" class="logo">
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
@@ -93,15 +125,13 @@
                 @if (Route::has('login'))
                 @auth
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Hola {{ auth()->user()->name }}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <form method="POST" action="{{ route('logout') }}" id="logout-form">
                             @csrf
-                            <a class="dropdown-item" href="#"
-                                onclick="document.getElementById('logout-form').submit();">Cerrar sesión</a>
+                            <a class="dropdown-item" href="#" onclick="document.getElementById('logout-form').submit();">Cerrar sesión</a>
                         </form>
                     </div>
                 </li>
@@ -120,8 +150,7 @@
                 @auth
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('/orders') }}">
-                        <img class="shoppingCart"
-                            src="/assets/svg/shopping_cart_24dp_FILL0_wght400_GRAD0_opsz24 (1).svg" alt="Carrito">
+                        <img class="shoppingCart" src="/assets/svg/shopping_cart_24dp_FILL0_wght400_GRAD0_opsz24 (1).svg" alt="Carrito">
                         <span id="cart-count">0</span>
                     </a>
                 </li>
@@ -153,28 +182,40 @@
         </div>
     </nav>
 
+    <!-- Alert Container -->
+    <div id="alert-container" class="alert-floating">
+        @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <script>
+            setTimeout(function() {
+                document.getElementById('alert-container').innerHTML = '';
+            }, 4000);
+        </script>
+        @endif
+    </div>
+
     <section class="d-flex flex-column align-items-center py-5">
         <div class="form-container">
-            <form id="contactForm">
+            <form id="contactForm" method="POST" action="{{ route('contacto') }}">
+                @csrf
                 <div class="form-group">
                     <label for="name">Nombre</label>
-                    <input type="text" class="form-control" id="name" name="name" required
-                        pattern="[A-Z][a-zA-Z\s]*" title="La primera letra debe ser mayúscula.">
+                    <input type="text" class="form-control" id="name" name="name" required pattern="[A-Z][a-zA-Z\s]*" title="La primera letra debe ser mayúscula.">
                 </div>
                 <div class="form-group">
                     <label for="phone">Teléfono</label>
-                    <input type="tel" class="form-control" id="phone" name="phone" required
-                        pattern="(\+34|0034|34)?[6|7][0-9]{8}" title="Número de teléfono válido de España.">
+                    <input type="tel" class="form-control" id="phone" name="phone" required pattern="(\+34|0034|34)?[6|7][0-9]{8}" title="Número de teléfono válido de España.">
                 </div>
                 <div class="form-group">
                     <label for="email">Correo Electrónico</label>
-                    <input type="email" class="form-control" id="email" name="email" required
-                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}" title="Correo electrónico válido.">
+                    <input type="email" class="form-control" id="email" name="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}" title="Correo electrónico válido.">
                 </div>
                 <div class="form-group">
                     <label for="message">Mensaje</label>
-                    <textarea class="form-control" id="message" name="message" rows="4" required
-                        minlength="30" title="El mensaje debe tener al menos 30 caracteres."></textarea>
+                    <textarea class="form-control" id="message" name="message" rows="4" required minlength="30" title="El mensaje debe tener al menos 30 caracteres."></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Enviar</button>
             </form>
@@ -186,7 +227,7 @@
             <div class="box">
                 <figure>
                     <a href="{{'/'}}">
-                        <img src=/assets/logo/logo.png alt="Logo MerakiHandMade">
+                        <img src="/assets/logo/logo.png" alt="Logo MerakiHandMade">
                     </a>
                 </figure>
             </div>
@@ -199,54 +240,20 @@
             <div class="box">
                 <div class="red-social">
                     <h2>REDES SOCIALES</h2>
-                    <a href="#"><img src="/assets/icons/5296520_bubble_chat_mobile_whatsapp_whatsapp logo_icon.png"
-                            alt=""></a>
-                    <a href="https://www.instagram.com/meraki_handmadelove/?hl=es"><img
-                            src="/assets/icons/5296500_fb_social media_facebook_facebook logo_social network_icon.png"
-                            alt=""></a>
-                    <a href="https://www.linkedin.com/showcase/meraki-boutiques/about/"><img
-                            src="/assets/icons/5296501_linkedin_network_linkedin logo_icon.png" alt=""></a>
-                    <a href="https://www.instagram.com/meraki_handmadelove/?hl=es"><img
-                            src="/assets/icons/5296765_camera_instagram_instagram logo_icon.png" alt=""></a>
+                    <a href="#"><img src="/assets/icons/5296520_bubble_chat_mobile_whatsapp_whatsapp logo_icon.png" alt=""></a>
+                    <a href="https://www.instagram.com/meraki_handmadelove/?hl=es"><img src="/assets/icons/5296500_fb_social media_facebook_facebook logo_social network_icon.png" alt=""></a>
+                    <a href="https://www.linkedin.com/showcase/meraki-boutiques/about/"><img src="/assets/icons/5296501_linkedin_network_linkedin logo_icon.png" alt=""></a>
+                    <a href="https://www.instagram.com/meraki_handmadelove/?hl=es"><img src="/assets/icons/5296765_camera_instagram_instagram logo_icon.png" alt=""></a>
                 </div>
             </div>
         </section>
         <div class="grupo-2">
-            © 2024 MerakiHandMadeLove. Todos los derechos reservados.</div>
+            © 2024 MerakiHandMadeLove. Todos los derechos reservados。</div>
     </footer>
 
     <script src="/scripts/index.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-    <script>
-        document.getElementById('contactForm').addEventListener('submit', function (event) {
-            event.preventDefault();
-            alert('Formulario enviado');
-            window.location.href = '/';
-        });
-    </script>
-
-    <script>
-        const userId = document.querySelector('meta[name="user-id"]').getAttribute('content');
-        const cartKey = `cart_${userId}`;
-        let cart = userId ? JSON.parse(localStorage.getItem(cartKey)) || [] : [];
-        const cartItems = document.getElementById('cart-items');
-        const totalAmount = document.getElementById('total-amount');
-        const cartCount = document.getElementById('cart-count');
-        const emptyCartButton = document.getElementById('empty-cart');
-        let total = 0;
-
-        // Actualizar el contador del carrito
-        function updateCartCount() {
-            const itemCount = cart.reduce((count, product) => count + product.quantity, 0);
-            cartCount.textContent = itemCount;
-        }
-
-        updateCartCount();
-    </script>
-
 </body>
-
 </html>

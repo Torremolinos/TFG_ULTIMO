@@ -63,7 +63,6 @@ Route::get('/cart/add', [OrderController::class, 'add'])->name('add');
 Route::get('/cart/checkout', [OrderController::class, 'checkout'])->name('checkout');
 
 
-
-
+Route::post('/contacto', [OrderController::class, 'storeContact'])->name('contacto');
 
 require __DIR__.'/auth.php';

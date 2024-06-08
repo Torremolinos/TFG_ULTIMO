@@ -16,7 +16,7 @@
   }
   
   body {
-    background-color: var(--backgroundBody-color);
+    background-color: var(--backgroundBody-color)!important;
     font-family: "EdusaBeginner";
   }
   
@@ -30,6 +30,7 @@
     padding: 0;
     box-sizing: border-box;
   }
+
   :root {
     --color--white: rgb(83, 62, 17);
     --backgroundBody-color:rgb(216, 186, 147);
@@ -40,6 +41,9 @@
     --s2--font-size: 2rem;
     --s2--max-height: 1200px; 
     --font-family: "Pacifico"!important;
+    --color-white: rgb(216, 186, 147);
+    --backgroundBody-color: rgb(216 186 147 / 70%);
+    --navbar-toggler-color: white;
   }
   
   @media screen and (max-width: 1024px) {
@@ -185,6 +189,7 @@
   a {
     color: var(--color--white);
     text-decoration: none;
+    
   }
   
   /*-----------------pie de pagina--------------------*/
@@ -371,5 +376,78 @@ img {
   font-weight: 400;
   font-size: 13px;
   margin-top: 35px;
+  text-align: center;
+}
+
+
+
+
+
+.navbar-custom {
+  background-color: var(--color-white);
+}
+
+.table-custom thead {
+  background-color: var (--color-white);
+  color: white;
+}
+
+.table-custom tbody {
+  background-color: white;
+}
+
+.btn-primary-custom {
+  background-color: var (--color-white);
+  border-color: var (--color-white);
+}
+
+.btn-primary-custom:hover {
+  background-color: rgb(216 186 147 / 70%);
+  border-color: #5a4c14;
+}
+
+.navbar-toggler {
+  border-color: var (--navbar-toggler-color);
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+a {
+  color: black !important;
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+}
+
+.alert-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1050;
+  width: auto;
+  max-width: 300px;
+}
+
+.alert-float {
+  margin-bottom: 10px;
+}
+
+.btn.card_btn {
+  text-align: center;
+  width: 100%;
+  padding: 10px;
+}
+
+.price-container {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+.card_content {
   text-align: center;
 }

@@ -32,6 +32,7 @@
 
         .navbar-custom {
             background-color: var(--color-white);
+            padding: 0 20px;
         }
 
         .table-custom thead {
@@ -51,7 +52,7 @@
 
         .btn-primary-custom:hover {
             background-color: var(--btn-primary-hover-bg);
-            border-color: var(--btn-primary-hover-border);
+            border-color: var (--btn-primary-hover-border);
         }
 
         .navbar-toggler {
@@ -85,6 +86,101 @@
 
         a {
             color: black;
+        }
+
+        .footer .grupo-1 {
+            display: flex;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .footer .box {
+            margin: 0 20px;
+        }
+
+        .footer .box h2 {
+            text-align: center;
+        }
+
+        .footer .box a {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        /* Responsiveness */
+        @media (max-width: 768px) {
+            .navbar-nav {
+                text-align: center;
+            }
+
+            .navbar-nav .nav-item {
+                margin-bottom: 10px;
+            }
+
+            .table-responsive {
+                overflow-x: auto;
+            }
+
+            .footer .grupo-1 {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .footer .box {
+                width: 100%;
+                text-align: center;
+                margin-bottom: 20px;
+            }
+        }
+
+        /* Styles for making table responsive */
+        @media (max-width: 600px) {
+            .table-responsive {
+                border: 0;
+            }
+
+            .table-responsive table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            .table-responsive table thead {
+                display: none;
+            }
+
+            .table-responsive table tr {
+                display: block;
+                margin-bottom: 10px;
+                border: 1px solid #ddd;
+                padding: 10px;
+                border-radius: 10px;
+                background-color: white;
+            }
+
+            .table-responsive table td {
+                display: block;
+                text-align: right;
+                font-size: 13px;
+                border-bottom: 1px dotted #ccc;
+                padding: 5px;
+                position: relative;
+            }
+
+            .table-responsive table td::before {
+                content: attr(data-label);
+                float: left;
+                text-transform: uppercase;
+                font-weight: bold;
+            }
+
+            .table-responsive table td:last-child {
+                border-bottom: 0;
+            }
+
+            .table-responsive table ul {
+                padding-left: 0;
+                list-style: none;
+            }
         }
     </style>
 </head>
@@ -176,23 +272,23 @@
                     <tbody>
                         @foreach ($orders as $order)
                         <tr>
-                            <td>{{ $order->user->name }}</td>
-                            <td>{{ $order->order_number }}</td>
-                            <td>
+                            <td data-label="Nombre del Usuario">{{ $order->user->name }}</td>
+                            <td data-label="Número del Pedido">{{ $order->order_number }}</td>
+                            <td data-label="Productos">
                                 <ul>
                                     @foreach ($order->orderItems as $item)
                                     <li>{{ $item->product->name }} ({{ $item->quantity }} x €{{ $item->unit_amount }})</li>
                                     @endforeach
                                 </ul>
                             </td>
-                            <td>{{ $order->created_at->format('Y-m-d') }}</td>
-                            <td>
+                            <td data-label="Fecha de Realización">{{ $order->created_at}}</td>
+                            <td data-label="Fecha de Expiración">
                                 <?php
                                     $expirationDate = date('Y-m-d', strtotime($order->created_at. ' + 7 days'));
                                     echo $expirationDate;
                                 ?>
                             </td>
-                            <td>€{{ $order->order->total_price }}</td>
+                            <td data-label="Precio Total">€{{ $order->order->total_price }}</td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -228,6 +324,25 @@
         <div class="grupo-2">
             © 2024 MerakiHandMadeLove. Todos los derechos reservados.</div>
     </footer>
+    <script>
+        const userId = document.querySelector('meta[name="user-id"]').getAttribute('content');
+        const cartKey = `cart_${userId}`;
+        let cart = userId ? JSON.parse(localStorage.getItem(cartKey)) || [] : [];
+        const cartItems = document.getElementById('cart-items');
+        const totalAmount = document.getElementById('total-amount');
+        const cartCount = document.getElementById('cart-count');
+        const emptyCartButton = document.getElementById('empty-cart');
+        let total = 0;
+
+        // Actualizar el contador del carrito
+        function updateCartCount() {
+            const itemCount = cart.reduce((count, product) => count + product.quantity, 0);
+            cartCount.textContent = itemCount;
+        }
+
+        updateCartCount();
+    </script>
+
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>

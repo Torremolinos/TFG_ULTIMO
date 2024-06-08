@@ -31,6 +31,7 @@
 
         .navbar-custom {
             background-color: var(--color-white);
+            padding: 0 20px;
         }
 
         .table-custom thead {
@@ -69,7 +70,8 @@
             margin-top: auto;
         }
 
-        .table td, .table th {
+        .table td,
+        .table th {
             vertical-align: middle;
         }
 
@@ -82,7 +84,67 @@
         }
 
         a {
-            color: var(--color-white);
+            color: black;
+        }
+
+        @media (max-width: 767px) {
+            .navbar-brand img {
+                max-width: 100px;
+            }
+
+            .navbar-nav {
+                text-align: center;
+            }
+
+            .navbar-collapse {
+                background-color: var(--color-white);
+            }
+
+            .table-responsive {
+                overflow-x: auto;
+            }
+
+            .table thead {
+                display: none;
+            }
+
+            .table tr {
+                display: block;
+                margin-bottom: 15px;
+                border: 1px solid #ddd;
+                padding: 10px;
+                border-radius: 10px;
+                background-color: white;
+            }
+
+            .table td {
+                display: block;
+                text-align: right;
+                font-size: 13px;
+                border: none;
+                position: relative;
+                padding-left: 50%;
+            }
+
+            .table td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 10px;
+                width: 45%;
+                padding-right: 10px;
+                white-space: nowrap;
+                text-align: left;
+                font-weight: bold;
+            }
+
+            .table td:last-child {
+                border-bottom: 0;
+            }
+
+            .table-responsive table ul {
+                padding-left: 0;
+                list-style: none;
+            }
         }
     </style>
 </head>
@@ -214,6 +276,7 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const userId = document.querySelector('meta[name="user-id"]').getAttribute('content');
@@ -238,24 +301,24 @@
                 const row = document.createElement('tr');
 
                 row.innerHTML = `
-            <td>${product.name}</td>
-            <td>${product.price.toFixed(2)}€</td>
-            <td>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <button class="btn btn-outline-secondary decrease" type="button" data-id="${product.id}">-</button>
-                    </div>
-                    <input type="number" class="form-control quantity" value="${product.quantity}" min="1" data-id="${product.id}">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary increase" type="button" data-id="${product.id}">+</button>
-                    </div>
-                </div>
-            </td>
-            <td>€${(product.price * product.quantity).toFixed(2)}</td>
-            <td>
-                <button class="btn btn-danger btn-sm remove" data-id="${product.id}">Eliminar</button>
-            </td>
-        `;
+                    <td data-label="Producto">${product.name}</td>
+                    <td data-label="Precio">${product.price.toFixed(2)}€</td>
+                    <td data-label="Cantidad">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <button class="btn btn-outline-secondary decrease" type="button" data-id="${product.id}">-</button>
+                            </div>
+                            <input type="number" class="form-control quantity" value="${product.quantity}" min="1" data-id="${product.id}">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary increase" type="button" data-id="${product.id}">+</button>
+                            </div>
+                        </div>
+                    </td>
+                    <td data-label="Total">€${(product.price * product.quantity).toFixed(2)}</td>
+                    <td data-label="Acciones">
+                        <button class="btn btn-danger btn-sm remove" data-id="${product.id}">Eliminar</button>
+                    </td>
+                `;
 
                 cartItems.appendChild(row);
                 total += product.price * product.quantity;
@@ -351,5 +414,4 @@
         });
     </script>
 </body>
-
 </html>

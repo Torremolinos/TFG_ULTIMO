@@ -12,7 +12,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="user-id" content="{{ auth()->user()->id ?? '' }}">
     <style>
-        :root {
+      :root {
             --color-white: rgb(216, 186, 147);
             --backgroundBody-color: rgb(216 186 147 / 70%);
             --navbar-toggler-color: white;
@@ -24,6 +24,7 @@
 
         .navbar-custom {
             background-color: var(--color-white);
+            padding: 0 20px;
         }
 
         .table-custom thead {
@@ -51,6 +52,34 @@
 
         .navbar-toggler-icon {
             background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+        }
+
+        a {
+            color: black;
+        }
+
+        /* Responsiveness */
+        @media (max-width: 767px) {
+            .navbar-brand img {
+                max-width: 100px;
+            }
+
+            .navbar-nav {
+                text-align: center;
+            }
+
+            .navbar-collapse {
+                background-color: var(--color-white);
+            }
+
+            .navbar-nav .nav-item {
+                margin-bottom: 10px;
+            }
+
+            .navbar-nav .nav-item .nav-link {
+                padding: 10px;
+                display: block;
+            }
         }
     </style>
 </head>
@@ -169,7 +198,7 @@
             </div>
         </section>
         <div class="grupo-2">
-            © 2024 MerakiHandMadeLove. Todos los derechos reservados.</div>
+            © 2024 MerakiHandMadeLove. Todos los derechos reservados。</div>
     </footer>
     <script src="/scripts/index.js"></script>
     <script>
@@ -194,5 +223,4 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
-
 </html>

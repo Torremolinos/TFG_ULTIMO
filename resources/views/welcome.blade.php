@@ -26,6 +26,7 @@
 
         .navbar-custom {
             background-color: var(--color-white);
+            padding: 0 20px;
         }
 
         .table-custom thead {
@@ -54,8 +55,34 @@
         .navbar-toggler-icon {
             background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
         }
+
         a {
             color: black;
+        }
+
+        
+        /* Responsiveness */
+        @media (max-width: 767px) {
+            .navbar-brand img {
+                max-width: 100px;
+            }
+
+            .navbar-nav {
+                text-align: center;
+            }
+
+            .navbar-collapse {
+                background-color: var(--color-white);
+            }
+
+            .navbar-nav .nav-item {
+                margin-bottom: 10px;
+            }
+
+            .navbar-nav .nav-item .nav-link {
+                padding: 10px;
+                display: block;
+            }
         }
     </style>
 </head>
@@ -159,7 +186,7 @@
             <div class="box">
                 <figure>
                     <a href="{{'/'}}">
-                        <img src=/assets/logo/logo.png alt="Logo MerakiHandMade">
+                        <img src="/assets/logo/logo.png" alt="Logo MerakiHandMade">
                     </a>
                 </figure>
             </div>
@@ -180,19 +207,14 @@
             </div>
         </section>
         <div class="grupo-2">
-            © 2024 MerakiHandMadeLove. Todos los derechos reservados.</div>
+            © 2024 MerakiHandMadeLove. Todos los derechos reservados。</div>
     </footer>
     <script>
-            const userId = document.querySelector('meta[name="user-id"]').getAttribute('content');
+        const userId = document.querySelector('meta[name="user-id"]').getAttribute('content');
         const cartKey = `cart_${userId}`;
         let cart = userId ? JSON.parse(localStorage.getItem(cartKey)) || [] : [];
-        const cartItems = document.getElementById('cart-items');
-        const totalAmount = document.getElementById('total-amount');
         const cartCount = document.getElementById('cart-count');
-        const emptyCartButton = document.getElementById('empty-cart');
-        let total = 0;
 
-        // Actualizar el contador del carrito
         function updateCartCount() {
             const itemCount = cart.reduce((count, product) => count + product.quantity, 0);
             cartCount.textContent = itemCount;
